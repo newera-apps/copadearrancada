@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.0.2 -->
+<!-- v1.0.3 -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -30,7 +30,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Roboto', sans-serif; background: #080808; color: #f0f0f0; overflow-x: hidden; }
-    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #080808; }
     ::-webkit-scrollbar-thumb { background: #E12529; border-radius: 2px; }
 
@@ -145,7 +145,7 @@
     .red-glow { text-shadow: 0 0 40px rgba(225,37,41,.5); }
 
     /* ---- LAYOUT ---- */
-    .section-wrap { max-width: 1300px; margin-left: auto; margin-right: auto; }
+    .section-wrap { max-width: 1300px; width: 100%; margin-left: auto; margin-right: auto; }
   </style>
 </head>
 <body>
@@ -153,10 +153,12 @@
 <!-- ============================================================
      NAVBAR FIXA
      ============================================================ -->
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3 px-5 md:px-10 flex items-center justify-between transition-all duration-300"
-     style="background: rgba(8,8,8,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(225,37,41,.15);">
-  <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-8 md:h-10" style="filter: drop-shadow(0 0 8px rgba(255,255,255,.15));">
-  <a href="#formulario" class="btn-red px-5 py-2 text-xs md:text-sm ">Quero meu voucher</a>
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+     style="background: rgba(8,8,8,.85); backdrop-filter: blur(12px);">
+  <div class="section-wrap px-5 md:px-10 py-3 flex items-center justify-between">
+    <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-8 md:h-10" style="filter: drop-shadow(0 0 8px rgba(255,255,255,.15));">
+    <a href="#formulario" class="btn-red px-5 py-2 text-xs md:text-sm ">Quero meu voucher</a>
+  </div>
 </nav>
 
 
