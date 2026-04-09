@@ -787,7 +787,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor" style="margin-right:8px;flex-shrink:0"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
         Baixar Meu Voucher
       </button>
-      <a href="https://www.instagram.com/brsport.oficial" target="_blank" class="btn-ghost" style="padding:18px 24px; font-size:.95rem; text-decoration:none; justify-content:center;">
+      <a href="https://www.instagram.com/brsport.oficial" target="_blank" class="btn-red" style="padding:18px 24px; font-size:.95rem; text-decoration:none; justify-content:center;">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         Seguir no Instagram
       </a>
@@ -899,28 +899,13 @@
     let attempts = 0;
     let confirmed = false;
 
-    while (!confirmed && attempts < 5) {
-      try {
-        const res = await fetch(SHEETS_URL, {
-          method: 'POST',
-          redirect: 'follow',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({ datetime, nome, email, telefone: phone, voucher })
-        });
-        const json = await res.json();
-        if (json.ok) {
-          confirmed = true;
-          voucher = json.voucher;
-        } else {
-          // Voucher duplicado — gera outro e tenta novamente
-          voucher = generateVoucher();
-          attempts++;
-        }
-      } catch(err) {
-        console.warn('Sheets error:', err);
-        confirmed = true; // falha silenciosa, usa o voucher local
-      }
-    }
+    // Envia para Google Sheets (fire-and-forget com no-cors para evitar bloqueio CORS)
+    fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ datetime, nome, email, telefone: phone, voucher })
+    }).catch(err => console.warn('Sheets error:', err));
 
     _vd = { nome, email, phone, datetime, voucher };
     localStorage.setItem('ftbrs_completed', JSON.stringify(_vd));
@@ -961,7 +946,7 @@
     doc.setTextColor(160, 160, 160);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8);
-    doc.text('SEU VOUCHER EXCLUSIVO', 105, 72, { align: 'center', charSpace: 2 });
+    doc.text('SEU VOUCHER EXCLUSIVO', 105, 72, { align: 'center' });
 
     // Código grande
     doc.setTextColor(225, 37, 41);
