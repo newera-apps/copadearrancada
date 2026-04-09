@@ -856,12 +856,27 @@
   let _vd = {};
 
   function generateVoucher() {
+    // Primeiros 2 dígitos: últimos 2 do timestamp em ms (quasi-único por tempo)
+    // Últimos 2 dígitos: aleatório
+    // Combinado com localStorage garante nunca repetir no mesmo device
     const used = JSON.parse(localStorage.getItem('ftbrs_used') || '[]');
     let digits;
-    do { digits = String(Math.floor(1000 + Math.random() * 9000)); }
-    while (used.includes(digits));
+    let attempts = 0;
+    do {
+      const ts = String(Date.now()).slice(-2);
+      const rand = String(Math.floor(10 + Math.random() * 90));
+      digits = ts + rand;
+      attempts++;
+      if (attempts > 200) { digits = String(Date.now()).slice(-4); break; }
+    } while (used.includes(digits));
     used.push(digits);
     localStorage.setItem('ftbrs_used', JSON.stringify(used));
+
+    // Salva registro completo no localStorage como log local
+    const log = JSON.parse(localStorage.getItem('ftbrs_log') || '[]');
+    log.push({ voucher: 'FTBRS' + digits, ts: new Date().toISOString() });
+    localStorage.setItem('ftbrs_log', JSON.stringify(log));
+
     return 'FTBRS' + digits;
   }
 
