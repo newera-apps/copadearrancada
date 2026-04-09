@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<!-- v1.0.2 -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BR Sport + FuelTech — Collab Oficial Copa BR Sport FT de Arrancada</title>
+  <meta name="description" content="A coleção exclusiva BR Sport + FuelTech chegou. Cadastre-se e garanta seu voucher + presente exclusivo na Copa BR Sport FT de Arrancada no Autódromo FuelTech Velopark.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            red: { DEFAULT: '#E12529', dark: '#b81e21', glow: 'rgba(225,37,41,0.35)' },
+            ink: { DEFAULT: '#080808', 2: '#0f0f0f', 3: '#161616', 4: '#1e1e1e' },
+          },
+          fontFamily: {
+            anton: ['Anton','sans-serif'],
+            roboto: ['Roboto','sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Roboto', sans-serif; background: #080808; color: #f0f0f0; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #080808; }
+    ::-webkit-scrollbar-thumb { background: #E12529; border-radius: 2px; }
+
+    /* ---- TYPOGRAPHY ---- */
+    .f-anton { font-family: 'Anton', sans-serif; }
+
+    /* ---- BUTTONS ---- */
+    .btn-red {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #E12529; color: #fff; border-radius: 10px;
+      font-family: 'Anton', sans-serif; letter-spacing: .06em; text-transform: uppercase;
+      transition: background .25s, transform .25s, box-shadow .25s;
+      cursor: pointer; border: none;
+    }
+    .btn-red:hover { background: #b81e21; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(225,37,41,.5); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: transparent; color: #E12529; border: 2px solid #E12529; border-radius: 10px;
+      font-family: 'Anton', sans-serif; letter-spacing: .06em; text-transform: uppercase;
+      transition: all .25s; cursor: pointer;
+    }
+    .btn-ghost:hover { background: #E12529; color: #fff; }
+
+    /* ---- HERO SLIDER ---- */
+    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; pointer-events: none; }
+    .slide.active { opacity: 1; pointer-events: auto; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-gradient {
+      background: linear-gradient(to bottom,
+        rgba(8,8,8,.25) 0%,
+        rgba(8,8,8,.35) 35%,
+        rgba(8,8,8,.75) 65%,
+        rgba(8,8,8,1) 100%);
+    }
+
+    /* ---- SLIDE TEXT ---- */
+    .slide-text { display: none; }
+    .slide-text.active { display: block; }
+
+    /* ---- SLIDER DOTS ---- */
+    .dot {
+      width: 8px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.3);
+      cursor: pointer; transition: all .3s;
+    }
+    .dot.active { background: #E12529; width: 28px; }
+
+    /* ---- TICKER ---- */
+    .ticker-track {
+      display: inline-flex; white-space: nowrap;
+      animation: ticker 22s linear infinite;
+    }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ---- REVEAL ON SCROLL ---- */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- RED ACCENT ---- */
+    .accent-line { width: 52px; height: 3px; background: #E12529; }
+    .section-label { font-family: 'Roboto', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .35em; text-transform: uppercase; color: #E12529; }
+
+    /* ---- PRODUCT CARD ---- */
+    .prod-card .card-img { transition: transform .55s ease; }
+    .prod-card:hover .card-img { transform: scale(1.06); }
+    .prod-card .card-cta { opacity: 0; transition: opacity .35s; }
+    .prod-card:hover .card-cta { opacity: 1; }
+
+    /* ---- STEPS ---- */
+    .step-num {
+      min-width: 50px; width: 50px; height: 50px; border-radius: 50%;
+      background: #E12529; display: flex; align-items: center; justify-content: center;
+      font-family: 'Anton', sans-serif; font-size: 1.2rem; color: #fff; flex-shrink: 0;
+    }
+
+    /* ---- FORM ---- */
+    .f-input {
+      width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 10px;
+      color: #f0f0f0; padding: 14px 18px; font-family: 'Roboto', sans-serif; font-size: .95rem;
+      transition: border-color .25s; outline: none;
+    }
+    .f-input:focus { border-color: #E12529; }
+    .f-input::placeholder { color: #555; }
+
+    /* ---- FAQ ---- */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .faq-body.open { max-height: 300px; }
+    .faq-plus { transition: transform .3s; font-size: 1.5rem; line-height: 1; color: #E12529; }
+    .faq-plus.open { transform: rotate(45deg); }
+
+    /* ---- SUCCESS ---- */
+    #success-msg { display: none; }
+
+    /* ---- PULSE BORDER ---- */
+    @keyframes pulseRed {
+      0%, 100% { border-color: rgba(225,37,41,.25); }
+      50% { border-color: rgba(225,37,41,.7); }
+    }
+    .pulse-border { animation: pulseRed 2.5s infinite; }
+
+    /* ---- MOSAIC ---- */
+    .mosaic { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; height: 520px; border-radius: 20px; overflow: hidden; }
+    .mosaic .m-main { grid-row: 1 / 3; }
+    .mosaic img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s; display: block; }
+    .mosaic img:hover { transform: scale(1.04); }
+    @media (max-width: 768px) {
+      .mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; }
+      .mosaic .m-main { grid-row: auto; grid-column: 1 / 3; aspect-ratio: 4/3; }
+      .mosaic .m-sub { aspect-ratio: 1/1; }
+    }
+
+    /* ---- GLOW ---- */
+    .red-glow { text-shadow: 0 0 40px rgba(225,37,41,.5); }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR FIXA
+     ============================================================ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3 px-5 md:px-10 flex items-center justify-between transition-all duration-300"
+     style="background: rgba(8,8,8,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(225,37,41,.15);">
+  <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-8 md:h-10" style="filter: drop-shadow(0 0 8px rgba(255,255,255,.15));">
+  <a href="#formulario" class="btn-red px-5 py-2 text-xs md:text-sm font-bold">Quero meu voucher</a>
+</nav>
+
+
+<!-- ============================================================
+     1. HERO COM SLIDER
+     ============================================================ -->
+<section id="hero" class="relative w-full overflow-hidden" style="min-height: 100svh;">
+
+  <!-- Slide backgrounds -->
+  <div class="absolute inset-0">
+    <div class="slide active" id="bg0">
+      <img src="assets/colecao/Fueltech BR Sport0226.webp" alt="Slide 1">
+      <div class="hero-gradient absolute inset-0"></div>
+    </div>
+    <div class="slide" id="bg1">
+      <img src="assets/colecao/Fueltech BR Sport0224.webp" alt="Slide 2">
+      <div class="hero-gradient absolute inset-0"></div>
+    </div>
+    <div class="slide" id="bg2">
+      <img src="assets/colecao/Fueltech BR Sport0169.webp" alt="Slide 3">
+      <div class="hero-gradient absolute inset-0"></div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex flex-col justify-center min-h-screen px-6 md:px-16 pb-14 pt-24 max-w-7xl mx-auto w-full">
+
+    <!-- Logo -->
+    <div class="flex flex-wrap items-center gap-4 mb-8">
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Selo Copa BR Sport FT de Arrancada" class="h-[133px] md:h-[173px] drop-shadow-2xl">
+    </div>
+
+    <!-- Slide texts -->
+    <div class="slide-text active" id="txt0">
+      <p class="section-label mb-3">Collab Exclusiva</p>
+      <h1 class="f-anton text-5xl md:text-7xl lg:text-[90px] leading-none uppercase mb-5 max-w-3xl">
+        O Encontro<br>de Gigantes
+      </h1>
+      <p class="text-white/75 text-base md:text-xl max-w-xl mb-8 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Onde o estilo encontra a alta performance. Conheça a collab exclusiva BR Sport + FuelTech, feita para quem vive o lifestyle das pistas dentro e fora delas.
+      </p>
+      <a href="#formulario" class="btn-red px-8 py-4 text-sm md:text-base font-bold">Quero meu voucher + presente exclusivo</a>
+    </div>
+
+    <div class="slide-text" id="txt1">
+      <p class="section-label mb-3">Edição Especial</p>
+      <h1 class="f-anton text-5xl md:text-7xl lg:text-[90px] leading-none uppercase mb-5 max-w-3xl">
+        <span class="block relative z-10">Edição Especial</span><span class="text-red">FuelTech</span>
+      </h1>
+      <p class="text-white/75 text-base md:text-xl max-w-xl mb-8 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Inspirada na velocidade. Construída para o seu dia a dia. O design arrojado da BR Sport com o DNA tecnológico da FuelTech.
+      </p>
+      <a href="#formulario" class="btn-red px-8 py-4 text-sm md:text-base font-bold">Garantir meu acesso exclusivo</a>
+    </div>
+
+    <div class="slide-text" id="txt2">
+      <p class="section-label mb-3">Copa Oficial</p>
+      <h1 class="f-anton text-5xl md:text-7xl lg:text-[90px] leading-none uppercase mb-5 max-w-3xl">
+        Copa BR Sport FT<br><span class="text-red">de Arrancada</span>
+      </h1>
+      <p class="text-white/75 text-base md:text-xl max-w-xl mb-8 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        A nova era da arrancada brasileira chegou. Calce a exclusividade da coleção oficial da Copa BR Sport FT de Arrancada.
+      </p>
+      <a href="#formulario" class="btn-red px-8 py-4 text-sm md:text-base font-bold">Quero participar da ação</a>
+    </div>
+
+    <!-- Dots -->
+    <div class="flex items-center gap-2 mt-10">
+      <div class="dot active" onclick="goSlide(0)"></div>
+      <div class="dot" onclick="goSlide(1)"></div>
+      <div class="dot" onclick="goSlide(2)"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     TICKER
+     ============================================================ -->
+<div class="overflow-hidden py-3" style="background:#E12529;">
+  <div class="ticker-track f-anton text-sm tracking-widest text-white">
+    <span class="mx-8">COLLAB EXCLUSIVA</span><span class="mx-4">✦</span>
+    <span class="mx-8">EDIÇÃO LIMITADA</span><span class="mx-4">✦</span>
+    <span class="mx-8">COPA BR SPORT FT DE ARRANCADA</span><span class="mx-4">✦</span>
+    <span class="mx-8">AUTÓDROMO FUELTECH VELOPARK</span><span class="mx-4">✦</span>
+    <span class="mx-8">BR SPORT + FUELTECH</span><span class="mx-4">✦</span>
+    <span class="mx-8">VOUCHER EXCLUSIVO</span><span class="mx-4">✦</span>
+    <span class="mx-8">COLLAB EXCLUSIVA</span><span class="mx-4">✦</span>
+    <span class="mx-8">EDIÇÃO LIMITADA</span><span class="mx-4">✦</span>
+    <span class="mx-8">COPA BR SPORT FT DE ARRANCADA</span><span class="mx-4">✦</span>
+    <span class="mx-8">AUTÓDROMO FUELTECH VELOPARK</span><span class="mx-4">✦</span>
+    <span class="mx-8">BR SPORT + FUELTECH</span><span class="mx-4">✦</span>
+    <span class="mx-8">VOUCHER EXCLUSIVO</span><span class="mx-4">✦</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     2. APRESENTAÇÃO DA COLLAB
+     ============================================================ -->
+<section id="collab" class="py-24 md:py-32 reveal" style="background:#0f0f0f;">
+  <div class="max-w-7xl mx-auto px-6 md:px-14">
+    <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+
+      <!-- Texto -->
+      <div>
+        <p class="section-label mb-4">A Parceria</p>
+        <div class="accent-line mb-6"></div>
+        <h2 class="f-anton text-4xl md:text-5xl lg:text-6xl uppercase leading-tight mb-6">
+          Acelerando o estilo:<br>
+          <span class="text-red">a collab que redefine a pista</span>
+        </h2>
+        <p class="text-white/65 leading-relaxed mb-4" style="font-family:'Roboto',sans-serif;">
+          A FuelTech transformou o automobilismo em espetáculo. A BR Sport, referência em conforto e design calçadista, trouxe essa energia para uma colaboração histórica.
+        </p>
+        <p class="text-white/65 leading-relaxed mb-10" style="font-family:'Roboto',sans-serif;">
+          A coleção FuelTech + BR Sport não é apenas uma linha de calçados. É o símbolo de uma parceria que nasceu no Autódromo FuelTech Velopark para celebrar a paixão pela velocidade. Desenvolvida para pilotos, entusiastas e para quem não abre mão de tecnologia, conforto e identidade.
+        </p>
+
+        <!-- Bullets -->
+        <div class="space-y-5 mb-10">
+          <div class="flex items-start gap-4">
+            <div style="min-width:4px;width:4px;height:52px;background:#E12529;border-radius:2px;margin-top:2px;"></div>
+            <div>
+              <p class="font-bold text-white text-sm" style="font-family:'Roboto',sans-serif;">Design aerodinâmico</p>
+              <p class="text-white/55 text-sm mt-1" style="font-family:'Roboto',sans-serif;">Linhas inspiradas na performance automotiva.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div style="min-width:4px;width:4px;height:52px;background:#E12529;border-radius:2px;margin-top:2px;"></div>
+            <div>
+              <p class="font-bold text-white text-sm" style="font-family:'Roboto',sans-serif;">Conforto de elite</p>
+              <p class="text-white/55 text-sm mt-1" style="font-family:'Roboto',sans-serif;">Tecnologia BR Sport para aguentar o ritmo das pistas e das ruas.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div style="min-width:4px;width:4px;height:52px;background:#E12529;border-radius:2px;margin-top:2px;"></div>
+            <div>
+              <p class="font-bold text-white text-sm" style="font-family:'Roboto',sans-serif;">Identidade FuelTech</p>
+              <p class="text-white/55 text-sm mt-1" style="font-family:'Roboto',sans-serif;">Detalhes que remetem à marca líder em performance no Brasil.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#formulario" class="btn-ghost px-8 py-4 text-sm font-bold">Quero desbloquear meu voucher</a>
+      </div>
+
+      <!-- Imagem -->
+      <div class="relative">
+        <div class="absolute -inset-6 rounded-2xl" style="background:radial-gradient(ellipse at center, rgba(225,37,41,.12) 0%, transparent 70%);"></div>
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl" style="border:1px solid rgba(225,37,41,.18);">
+          <img src="assets/colecao/Fueltech BR Sport0226.webp" alt="Tênis BR Sport FuelTech" class="w-full object-cover" style="max-height:600px;">
+        </div>
+        <div class="absolute -bottom-5 -left-5 rounded-2xl px-5 py-4 shadow-xl" style="background:#E12529;">
+          <p class="f-anton text-[10px] tracking-widest text-white/75">EDIÇÃO</p>
+          <p class="f-anton text-2xl text-white leading-none">LIMITADA</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     3. PRODUTOS / COLEÇÃO CÁPSULA
+     ============================================================ -->
+<section id="colecao" class="py-24 md:py-32 reveal" style="background:#080808;">
+  <div class="max-w-7xl mx-auto px-6 md:px-14">
+
+    <div class="text-center mb-16">
+      <p class="section-label mb-4">Coleção Cápsula</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-6xl uppercase leading-tight max-w-2xl mx-auto">
+        A Coleção que <span class="text-red">Veio para Marcar</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+      <div class="prod-card rounded-2xl overflow-hidden cursor-pointer relative" style="background:#161616;"
+           onclick="scrollToForm()">
+        <div class="overflow-hidden" style="height:380px;">
+          <img src="assets/colecao/Fueltech BR Sport0226.webp" alt="Tênis — Estilo que acelera" class="card-img w-full h-full object-cover">
+        </div>
+        <div class="card-cta absolute inset-0 flex items-center justify-center" style="background:rgba(225,37,41,.18);">
+          <span class="btn-red px-6 py-3 text-sm">Quero esse modelo</span>
+        </div>
+        <div class="p-6">
+          <span class="section-label">Tênis</span>
+          <h3 class="f-anton text-2xl uppercase text-white mt-1 mb-2">Estilo que acelera</h3>
+          <p class="text-white/55 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">
+            Visual marcante, atitude de pista e acabamento premium para quem quer carregar performance no dia a dia.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 2 (offset no desktop) -->
+      <div class="prod-card rounded-2xl overflow-hidden cursor-pointer relative md:mt-10" style="background:#161616;"
+           onclick="scrollToForm()">
+        <div class="overflow-hidden" style="height:380px;">
+          <img src="assets/colecao/Fueltech BR Sport0224.webp" alt="Slide — Conforto com DNA de corrida" class="card-img w-full h-full object-cover">
+        </div>
+        <div class="card-cta absolute inset-0 flex items-center justify-center" style="background:rgba(225,37,41,.18);">
+          <span class="btn-red px-6 py-3 text-sm">Quero esse modelo</span>
+        </div>
+        <div class="p-6">
+          <span class="section-label">Slide</span>
+          <h3 class="f-anton text-2xl uppercase text-white mt-1 mb-2">Conforto com DNA de corrida</h3>
+          <p class="text-white/55 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">
+            Tecnologia, conforto e identidade automotiva unidos em uma peça exclusiva da collab.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="prod-card rounded-2xl overflow-hidden cursor-pointer relative" style="background:#161616;"
+           onclick="scrollToForm()">
+        <div class="overflow-hidden" style="height:380px;">
+          <img src="assets/colecao/Fueltech BR Sport0169.webp" alt="Chinelo — Exclusividade oficial" class="card-img w-full h-full object-cover">
+        </div>
+        <div class="card-cta absolute inset-0 flex items-center justify-center" style="background:rgba(225,37,41,.18);">
+          <span class="btn-red px-6 py-3 text-sm">Quero esse modelo</span>
+        </div>
+        <div class="p-6">
+          <span class="section-label">Chinelo</span>
+          <h3 class="f-anton text-2xl uppercase text-white mt-1 mb-2">Exclusividade oficial da coleção</h3>
+          <p class="text-white/55 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">
+            Uma edição criada para quem valoriza design, cultura automotiva e a força da FuelTech nas pistas.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-14">
+      <a href="#formulario" class="btn-red px-10 py-5 text-sm md:text-base font-bold">Quero meu voucher exclusivo</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     4. FORMULÁRIO / VOUCHER
+     ============================================================ -->
+<section id="formulario" class="relative py-24 md:py-32 overflow-hidden reveal">
+  <!-- Background -->
+  <div class="absolute inset-0" style="background:#0f0f0f;"></div>
+  <div class="absolute inset-0 opacity-[.04]">
+    <img src="assets/autodromo/geralft35.webp" alt="" class="w-full h-full object-cover">
+  </div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+       style="background:radial-gradient(circle, rgba(225,37,41,.15) 0%, transparent 70%);"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-14">
+
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <p class="section-label mb-4">Ação Exclusiva</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-6xl lg:text-7xl uppercase leading-tight max-w-4xl mx-auto mb-4">
+        Garanta seu voucher e ganhe um
+        <span class="text-red"> presente exclusivo</span>
+      </h2>
+      <p class="text-white/60 max-w-2xl mx-auto leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Esta é uma edição limitada para quem participa do evento no Velopark. Ao preencher seus dados, você não apenas garante o lançamento oficial, mas também recebe um presente exclusivo e limitado, produzido especialmente para quem estiver presente na 1ª edição da Copa BR Sport FT de Arrancada.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+
+      <!-- Steps -->
+      <div>
+        <h3 class="f-anton text-2xl uppercase mb-8 text-white">Como funciona</h3>
+        <div class="space-y-6 mb-10">
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">1</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Preencha seus dados abaixo.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">Cadastro rápido, sem complicação.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">2</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Receba seu voucher exclusivo.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">Enviado diretamente após o cadastro.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">3</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Siga a BR Sport no Instagram.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">Um dos requisitos para resgatar o brinde.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">4</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Visite a loja da FuelTech no Velopark.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">Informe seu voucher e compre um dos produtos da nova coleção.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">5</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Vá ao estande da BR Sport.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">Mostre o cupom fiscal e comprove que está seguindo a BR Sport no Instagram para resgatar seu presente.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="rounded-2xl p-5" style="background:#161616;border:1px solid rgba(255,255,255,.07);">
+          <p class="text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;color:rgba(255,255,255,.6);">
+            <span style="color:#E12529;font-weight:700;display:inline-flex;align-items:center;gap:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Local:</span> Loja oficial FuelTech no Autódromo FuelTech Velopark.<br>
+            Use seu voucher para resgatar seu brinde no estande da BR Sport.<br>
+            <span style="color:rgba(255,255,255,.4);font-size:.8rem;">Enquanto durarem os estoques.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Formulário -->
+      <div class="relative">
+        <div class="absolute -inset-px rounded-3xl pulse-border" style="border:1px solid rgba(225,37,41,.3);border-radius:24px;pointer-events:none;"></div>
+        <div class="rounded-3xl p-8 md:p-10" style="background:#161616;border-radius:24px;">
+
+          <!-- Form -->
+          <div id="form-wrap">
+            <h3 class="f-anton text-2xl md:text-3xl uppercase text-white mb-1">Cadastre-se agora</h3>
+            <p class="text-white/35 text-sm mb-8" style="font-family:'Roboto',sans-serif;">Vagas limitadas · Enquanto durarem os estoques.</p>
+
+            <form id="lead-form" onsubmit="handleSubmit(event)" novalidate>
+              <div class="space-y-4 mb-6">
+                <div>
+                  <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">NOME COMPLETO *</label>
+                  <input type="text" id="f-nome" required placeholder="Seu nome completo" class="f-input">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">E-MAIL *</label>
+                  <input type="email" id="f-email" required placeholder="seu@email.com" class="f-input">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">WHATSAPP *</label>
+                  <input type="tel" id="f-phone" required placeholder="(00) 00000-0000" class="f-input" oninput="phoneMask(this)">
+                </div>
+              </div>
+
+              <button type="submit" class="btn-red w-full py-5 text-sm md:text-base font-bold" id="submit-btn">
+                QUERO MEU VOUCHER + PRESENTE EXCLUSIVO
+              </button>
+
+              <p class="text-white/25 text-xs text-center mt-4" style="font-family:'Roboto',sans-serif;">
+                Seus dados estão protegidos. Válido enquanto durarem os estoques.
+              </p>
+            </form>
+          </div>
+
+          <!-- Sucesso -->
+          <div id="success-msg" class="text-center py-6">
+            <div class="text-6xl mb-5">🏁</div>
+            <h3 class="f-anton text-3xl text-red uppercase mb-3">Cadastro realizado!</h3>
+            <p class="text-white/70 leading-relaxed mb-3" style="font-family:'Roboto',sans-serif;">
+              Seu voucher exclusivo foi liberado.<br>Agora siga as instruções para garantir seu presente no evento.
+            </p>
+            <p class="text-white/35 text-sm" style="font-family:'Roboto',sans-serif;">Verifique seu e-mail para mais detalhes.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     5. COPA BR SPORT FT DE ARRANCADA
+     ============================================================ -->
+<section id="copa" class="py-24 md:py-32 reveal" style="background:#080808;">
+  <div class="max-w-7xl mx-auto px-6 md:px-14">
+
+    <!-- Header -->
+    <div class="text-center mb-14">
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Selo Copa BR Sport FT de Arrancada"
+           class="h-28 md:h-36 mx-auto mb-8 drop-shadow-2xl">
+      <p class="section-label mb-4">O Evento</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-6xl lg:text-7xl uppercase leading-tight max-w-5xl mx-auto">
+        Muito além da moda:<br>
+        somos o <span class="text-red">main stage da arrancada</span>
+      </h2>
+    </div>
+
+    <!-- Mosaic -->
+    <div class="mosaic mb-16">
+      <div class="m-main overflow-hidden">
+        <img src="assets/autodromo/geralft653.webp" alt="Copa BR Sport FT de Arrancada — Drift com fumaça">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/autodromo/geralft1067.webp" alt="Burnout em P&B">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/autodromo/geralft35.webp" alt="Carro laranja vista aérea">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/autodromo/geralft81.webp" alt="Marcas espirais na pista">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/autodromo/DSC00776 (1).webp" alt="Noite no pit lane Velopark">
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-12">
+      <div>
+        <p class="text-white/65 leading-relaxed mb-4" style="font-family:'Roboto',sans-serif;">
+          A parceria entre BR Sport e FuelTech vai além do design. A BR Sport agora é patrocinadora master da Copa BR Sport FT de Arrancada, a principal competição de arrancada do Autódromo FuelTech Velopark.
+        </p>
+        <p class="text-white/65 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+          Estamos criando um ecossistema completo para a família e para os apaixonados por motores.
+        </p>
+      </div>
+      <div class="space-y-4">
+        <div class="rounded-2xl p-5 flex gap-4 items-start" style="background:#161616;border-left:4px solid #E12529;">
+          <div>
+            <h4 class="f-anton text-lg uppercase text-white mb-1">Lounge VIP BR Sport</h4>
+            <p class="text-white/50 text-sm" style="font-family:'Roboto',sans-serif;">Onde a adrenalina encontra o conforto premium.</p>
+          </div>
+        </div>
+        <div class="rounded-2xl p-5 flex gap-4 items-start" style="background:#161616;border-left:4px solid #E12529;">
+          <div>
+            <h4 class="f-anton text-lg uppercase text-white mb-1">Espaço Kids Molekinha e Molekinho</h4>
+            <p class="text-white/50 text-sm" style="font-family:'Roboto',sans-serif;">Diversão garantida para os futuros pilotos.</p>
+          </div>
+        </div>
+        <div class="rounded-2xl p-5 flex gap-4 items-start" style="background:#161616;border-left:4px solid #E12529;">
+          <div>
+            <h4 class="f-anton text-lg uppercase text-white mb-1">Premiações históricas</h4>
+            <p class="text-white/50 text-sm" style="font-family:'Roboto',sans-serif;">A maior premiação já vista na história da arrancada profissional no Brasil.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <p class="text-white/45 italic mb-6" style="font-family:'Roboto',sans-serif;">Siga a trilha da performance. Viva a experiência completa no Velopark.</p>
+      <a href="#formulario" class="btn-red px-10 py-5 text-sm md:text-base font-bold">Quero viver essa experiência</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6. CREDIBILIDADE
+     ============================================================ -->
+<section id="credibilidade" class="py-20 md:py-24 reveal" style="background:#E12529;">
+  <div class="max-w-5xl mx-auto px-6 md:px-14 text-center">
+    <h2 class="f-anton text-3xl md:text-5xl uppercase text-white mb-4">
+      Duas forças, uma collab histórica
+    </h2>
+    <p class="text-white/80 max-w-xl mx-auto mb-12 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+      Quando performance, design, conforto e cultura automotiva se encontram, o resultado não é apenas um produto. É um marco.
+    </p>
+    <div class="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16">
+      <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-10 md:h-14">
+      <div class="w-16 h-px md:w-px md:h-16 bg-white/30"></div>
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Copa BR Sport FT de Arrancada" class="h-24 md:h-32 drop-shadow-xl">
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     7. FAQ
+     ============================================================ -->
+<section id="faq" class="py-24 md:py-32 reveal" style="background:#0f0f0f;">
+  <div class="max-w-3xl mx-auto px-6 md:px-14">
+
+    <div class="text-center mb-14">
+      <p class="section-label mb-4">Dúvidas Frequentes</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-5xl uppercase leading-tight">
+        Ficou alguma <span class="text-red">dúvida?</span>
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Como faço para receber meu voucher?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Basta preencher o formulário com seus dados. Após o cadastro, seu voucher será liberado para uso na ação promocional.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">O voucher garante o brinde automaticamente?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">O voucher garante sua participação na ação, mas o resgate do presente depende do cumprimento das regras da campanha e da disponibilidade de estoque.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Onde devo comprar o produto?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">A compra deve ser feita na loja oficial da FuelTech no Autódromo FuelTech Velopark durante a ação.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">O que preciso apresentar para resgatar o presente?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Seu voucher, o cupom fiscal da compra e a comprovação de que está seguindo a BR Sport no Instagram.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">A promoção é por tempo limitado?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Sim. A ação é válida enquanto durarem os estoques do presente promocional.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     8. FOOTER
+     ============================================================ -->
+<footer style="background:#080808;border-top:1px solid rgba(255,255,255,.06);">
+
+  <!-- CTA Final -->
+  <div class="relative overflow-hidden py-20 md:py-28">
+    <div class="absolute inset-0 opacity-[.06]">
+      <img src="assets/autodromo/geralft653.webp" alt="" class="w-full h-full object-cover">
+    </div>
+    <div class="absolute top-0 left-0 right-0 h-1" style="background:#E12529;"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
+         style="background:radial-gradient(circle, rgba(225,37,41,.12) 0%, transparent 70%);"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-6 md:px-14 text-center">
+      <p class="section-label mb-4">Última chance</p>
+      <h2 class="f-anton text-4xl md:text-6xl uppercase leading-tight mb-4">
+        Preencha agora e garanta<br>
+        <span class="text-red">seu voucher + presente exclusivo</span>
+      </h2>
+      <p class="text-white/50 mb-10 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Enquanto durarem os estoques. Não perca a chance de fazer parte da história da arrancada brasileira.
+      </p>
+      <a href="#formulario" class="btn-red px-12 py-5 text-base md:text-lg font-bold">
+        QUERO MEU VOUCHER AGORA
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="max-w-7xl mx-auto px-6 md:px-14 py-10 flex flex-col md:flex-row items-center justify-between gap-6"
+       style="border-top:1px solid rgba(255,255,255,.06);">
+    <div class="flex flex-col md:flex-row items-center gap-6">
+      <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-8 md:h-10"
+           style="filter:drop-shadow(0 0 8px rgba(255,255,255,.1));">
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Copa BR Sport FT de Arrancada" class="h-14 drop-shadow-xl">
+    </div>
+    <p class="text-white/25 text-xs text-center md:text-right leading-relaxed" style="font-family:'Roboto',sans-serif;">
+      © 2026 BR Sport + FuelTech. Todos os direitos reservados.<br>
+      Promoção sujeita a disponibilidade de estoque.<br>
+      Válido apenas no Autódromo FuelTech Velopark durante o evento.
+    </p>
+  </div>
+
+</footer>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+  /* ---- SLIDER ---- */
+  let cur = 0;
+  const TOTAL = 3;
+  let timer;
+
+  function goSlide(n) {
+    document.getElementById('bg' + cur).classList.remove('active');
+    document.getElementById('txt' + cur).classList.remove('active');
+    document.querySelectorAll('.dot')[cur].classList.remove('active');
+
+    cur = n;
+
+    document.getElementById('bg' + cur).classList.add('active');
+    document.getElementById('txt' + cur).classList.add('active');
+    document.querySelectorAll('.dot')[cur].classList.add('active');
+  }
+
+  function nextSlide() { goSlide((cur + 1) % TOTAL); }
+
+  function startTimer() { timer = setInterval(nextSlide, 5000); }
+  function resetTimer() { clearInterval(timer); startTimer(); }
+
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.addEventListener('click', () => { goSlide(i); resetTimer(); });
+  });
+
+  startTimer();
+
+  /* ---- FAQ ---- */
+  function toggleFaq(btn) {
+    const body = btn.nextElementSibling;
+    const plus = btn.querySelector('.faq-plus');
+    const isOpen = body.classList.contains('open');
+
+    document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.faq-plus').forEach(p => p.classList.remove('open'));
+
+    if (!isOpen) { body.classList.add('open'); plus.classList.add('open'); }
+  }
+
+  /* ---- FORM ---- */
+  function phoneMask(el) {
+    let v = el.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length >= 11) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    else if (v.length >= 7) v = v.replace(/(\d{2})(\d{4,5})(\d*)/, (m, a, b, c) => c ? `(${a}) ${b}-${c}` : `(${a}) ${b}`);
+    else if (v.length >= 3) v = v.replace(/(\d{2})(\d*)/, '($1) $2');
+    el.value = v;
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    // TODO: integrate with Launch Hub API
+    // const data = { nome: document.getElementById('f-nome').value, email: document.getElementById('f-email').value, whatsapp: document.getElementById('f-phone').value };
+
+    setTimeout(() => {
+      document.getElementById('form-wrap').style.display = 'none';
+      const msg = document.getElementById('success-msg');
+      msg.style.display = 'block';
+    }, 1200);
+  }
+
+  function scrollToForm() {
+    document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /* ---- SCROLL REVEAL ---- */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ---- NAVBAR opacity on scroll ---- */
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(8,8,8,.97)';
+    } else {
+      nav.style.background = 'rgba(8,8,8,.85)';
+    }
+  }, { passive: true });
+</script>
+
+</body>
+</html>
