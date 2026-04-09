@@ -903,7 +903,8 @@
       try {
         const res = await fetch(SHEETS_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
+          headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify({ datetime, nome, email, telefone: phone, voucher })
         });
         const json = await res.json();
@@ -954,7 +955,7 @@
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(10);
-    doc.text('COPA BR SPORT FT DE ARRANCADA', 105, 42, { align: 'center' });
+    doc.text('COPA BR SPORT FT DE ARRANCADA', 105, 39, { align: 'center' });
 
     // Label voucher
     doc.setTextColor(160, 160, 160);
