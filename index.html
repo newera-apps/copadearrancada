@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.1.0 -->
+<!-- v1.2.0 -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -880,6 +880,8 @@
     return 'FTBRS' + digits;
   }
 
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxSCy5pF3Jb_4GxEwoHmUsBXaDovVJ4TFlYLWawF9zddXgHMXfQap6KSMfHZLJh2pBmcg/exec';
+
   async function handleSubmit(e) {
     e.preventDefault();
     const btn = document.getElementById('submit-btn');
@@ -891,18 +893,35 @@
     const phone    = document.getElementById('f-phone').value.trim();
     const now      = new Date();
     const datetime = now.toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' });
-    const voucher  = generateVoucher();
+
+    // Tenta até conseguir um voucher único na planilha
+    let voucher = generateVoucher();
+    let attempts = 0;
+    let confirmed = false;
+
+    while (!confirmed && attempts < 5) {
+      try {
+        const res = await fetch(SHEETS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ datetime, nome, email, telefone: phone, voucher })
+        });
+        const json = await res.json();
+        if (json.ok) {
+          confirmed = true;
+          voucher = json.voucher;
+        } else {
+          // Voucher duplicado — gera outro e tenta novamente
+          voucher = generateVoucher();
+          attempts++;
+        }
+      } catch(err) {
+        console.warn('Sheets error:', err);
+        confirmed = true; // falha silenciosa, usa o voucher local
+      }
+    }
 
     _vd = { nome, email, phone, datetime, voucher };
-
-    try {
-      await fetch('https://hook.us1.make.com/78ewcqeirrnlfq4rn3nkijrte8emf0o6', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ datetime, nome, email, telefone: phone, voucher })
-      });
-    } catch(err) { console.warn('Webhook:', err); }
-
     document.getElementById('modal-voucher-code').textContent = voucher;
     document.getElementById('voucher-modal').style.display = 'block';
     document.body.style.overflow = 'hidden';
