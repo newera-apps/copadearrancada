@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.0.4 -->
+<!-- v1.1.0 -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -141,6 +142,12 @@
 
     /* ---- GLOW ---- */
     .red-glow { text-shadow: 0 0 40px rgba(225,37,41,.5); }
+
+    /* ---- VOUCHER MODAL ---- */
+    #voucher-modal { display:none; position:fixed; inset:0; z-index:9999; background:#080808; overflow-y:auto; }
+    #voucher-modal .modal-inner { max-width:560px; margin:0 auto; padding:48px 24px 64px; text-align:center; }
+    .voucher-code-box { background:#E12529; border-radius:14px; padding:24px 20px; margin:24px 0; }
+    .voucher-code-value { font-family:'Anton',sans-serif; font-size:2.8rem; color:#fff; letter-spacing:.12em; word-break:break-all; }
 
     /* ---- LAYOUT ---- */
     .section-wrap { max-width: 1300px; width: 100%; margin-left: auto; margin-right: auto; }
@@ -752,6 +759,47 @@
 
 
 <!-- ============================================================
+     VOUCHER MODAL
+     ============================================================ -->
+<div id="voucher-modal">
+  <div class="modal-inner">
+    <img src="assets/selo-lp-copaarrancada.webp" alt="Selo Copa BR Sport FT de Arrancada" style="height:120px; margin-bottom:28px; filter:drop-shadow(0 0 20px rgba(225,37,41,.4));">
+    <h2 class="f-anton" style="font-size:2rem; color:#fff; text-transform:uppercase; line-height:1.15; margin-bottom:20px;">
+      Muito obrigado por<br>acelerar conosco!
+    </h2>
+
+    <div class="voucher-code-box">
+      <div style="font-size:.65rem; letter-spacing:.3em; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; margin-bottom:10px; text-transform:uppercase;">Seu Voucher Exclusivo</div>
+      <div class="voucher-code-value" id="modal-voucher-code">—</div>
+    </div>
+
+    <div style="background:#161616; border-radius:12px; padding:24px; margin-bottom:28px; text-align:left; border:1px solid rgba(255,255,255,.07);">
+      <p style="color:rgba(255,255,255,.7); font-size:.9rem; line-height:1.75; font-family:'Roboto',sans-serif; margin-bottom:14px;">
+        Aproveite cada milésimo da Copa FT BR Sport de Arrancada. <strong style="color:#fff;">*Siga a página da BR Sport no Instagram (@brsport.oficial)</strong> para ficar por dentro de todas as informações do evento e conhecer o universo da marca.
+      </p>
+      <p style="color:rgba(255,255,255,.7); font-size:.9rem; line-height:1.75; font-family:'Roboto',sans-serif;">
+        <strong style="color:#fff;">*Faça o download do seu voucher abaixo</strong>, visite a loja da FuelTech e compre um dos produtos da coleção BR Sport+FuelTech. Informe o seu voucher na hora do pagamento, em seguida visite o estande da BR Sport com o cupom fiscal da compra e seu voucher. Mostre que você está seguindo a BR Sport no Instagram e retire seu presente.
+      </p>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+      <button onclick="downloadVoucher()" class="btn-red" style="padding:18px 24px; font-size:.95rem; width:100%; justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor" style="margin-right:8px;flex-shrink:0"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+        Baixar Meu Voucher
+      </button>
+      <a href="https://www.instagram.com/brsport.oficial" target="_blank" class="btn-ghost" style="padding:18px 24px; font-size:.95rem; text-decoration:none; justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Seguir no Instagram
+      </a>
+    </div>
+
+    <p style="font-size:.72rem; color:rgba(255,255,255,.25); font-family:'Roboto',sans-serif; line-height:1.6;">
+      *Condições obrigatórias para validar o resgate do seu presente.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================
      JAVASCRIPT
      ============================================================ -->
 <script>
@@ -804,20 +852,123 @@
     el.value = v;
   }
 
-  function handleSubmit(e) {
+  /* ---- VOUCHER ---- */
+  let _vd = {};
+
+  function generateVoucher() {
+    const used = JSON.parse(localStorage.getItem('ftbrs_used') || '[]');
+    let digits;
+    do { digits = String(Math.floor(1000 + Math.random() * 9000)); }
+    while (used.includes(digits));
+    used.push(digits);
+    localStorage.setItem('ftbrs_used', JSON.stringify(used));
+    return 'FTBRS' + digits;
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
     const btn = document.getElementById('submit-btn');
-    btn.textContent = 'Enviando...';
     btn.disabled = true;
+    btn.innerHTML = 'Gerando voucher...';
 
-    // TODO: integrate with Launch Hub API
-    // const data = { nome: document.getElementById('f-nome').value, email: document.getElementById('f-email').value, whatsapp: document.getElementById('f-phone').value };
+    const nome     = document.getElementById('f-nome').value.trim();
+    const email    = document.getElementById('f-email').value.trim();
+    const phone    = document.getElementById('f-phone').value.trim();
+    const now      = new Date();
+    const datetime = now.toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' });
+    const voucher  = generateVoucher();
 
-    setTimeout(() => {
-      document.getElementById('form-wrap').style.display = 'none';
-      const msg = document.getElementById('success-msg');
-      msg.style.display = 'block';
-    }, 1200);
+    _vd = { nome, email, phone, datetime, voucher };
+
+    try {
+      await fetch('https://hook.us1.make.com/78ewcqeirrnlfq4rn3nkijrte8emf0o6', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ datetime, nome, email, telefone: phone, voucher })
+      });
+    } catch(err) { console.warn('Webhook:', err); }
+
+    document.getElementById('modal-voucher-code').textContent = voucher;
+    document.getElementById('voucher-modal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function downloadVoucher() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const { nome, email, phone, datetime, voucher } = _vd;
+
+    // Fundo vermelho
+    doc.setFillColor(225, 37, 41);
+    doc.rect(0, 0, 210, 297, 'F');
+
+    // Caixa branca central
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(18, 24, 174, 250, 8, 8, 'F');
+
+    // Barra vermelha no topo da caixa
+    doc.setFillColor(225, 37, 41);
+    doc.roundedRect(18, 24, 174, 28, 8, 8, 'F');
+    doc.rect(18, 40, 174, 12, 'F');
+
+    // Título no topo
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.text('COPA BR SPORT FT DE ARRANCADA', 105, 42, { align: 'center' });
+
+    // Label voucher
+    doc.setTextColor(160, 160, 160);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.text('SEU VOUCHER EXCLUSIVO', 105, 72, { align: 'center', charSpace: 2 });
+
+    // Código grande
+    doc.setTextColor(225, 37, 41);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(44);
+    doc.text(voucher, 105, 108, { align: 'center' });
+
+    // Linha divisória
+    doc.setDrawColor(220, 220, 220);
+    doc.setLineWidth(0.4);
+    doc.line(38, 122, 172, 122);
+
+    // Instruções
+    doc.setTextColor(80, 80, 80);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    const steps = [
+      '1. Compre um produto da coleção BR Sport + FuelTech na loja FuelTech do Velopark.',
+      '2. Informe este voucher na hora do pagamento.',
+      '3. Visite o estande BR Sport com o cupom fiscal e este voucher.',
+      '4. Mostre que segue @brsport.oficial no Instagram e retire seu presente.'
+    ];
+    let y = 134;
+    steps.forEach(s => {
+      const lines = doc.splitTextToSize(s, 148);
+      doc.text(lines, 32, y);
+      y += lines.length * 6 + 4;
+    });
+
+    // Segunda linha divisória
+    doc.line(38, y + 4, 172, y + 4);
+
+    // Dados do usuário
+    doc.setFontSize(7.5);
+    doc.setTextColor(120, 120, 120);
+    const dy = y + 14;
+    doc.text(`Nome: ${nome}`, 32, dy);
+    doc.text(`E-mail: ${email}`, 32, dy + 8);
+    doc.text(`Telefone: ${phone}`, 32, dy + 16);
+    doc.text(`Data/Hora: ${datetime}`, 32, dy + 24);
+
+    // Rodapé
+    doc.setFontSize(6.5);
+    doc.setTextColor(180, 180, 180);
+    doc.text('Válido apenas com cupom fiscal e seguindo @brsport.oficial no Instagram. Válido enquanto durarem os estoques.', 105, 265, { align: 'center', maxWidth: 160 });
+
+    doc.save('voucher-' + voucher + '.pdf');
   }
 
   function scrollToForm() {
