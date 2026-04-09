@@ -763,7 +763,7 @@
      ============================================================ -->
 <div id="voucher-modal">
   <div class="modal-inner">
-    <img src="assets/selo-lp-copaarrancada.webp" alt="Selo Copa BR Sport FT de Arrancada" style="height:120px; margin-bottom:28px; filter:drop-shadow(0 0 20px rgba(225,37,41,.4));">
+    <img src="assets/selo-lp-copaarrancada.webp" alt="Selo Copa BR Sport FT de Arrancada" style="height:120px; display:block; margin:0 auto 28px; filter:drop-shadow(0 0 20px rgba(225,37,41,.4));">
     <h2 class="f-anton" style="font-size:2rem; color:#fff; text-transform:uppercase; line-height:1.15; margin-bottom:20px;">
       Muito obrigado por<br>acelerar conosco!
     </h2>
@@ -922,7 +922,12 @@
     }
 
     _vd = { nome, email, phone, datetime, voucher };
-    document.getElementById('modal-voucher-code').textContent = voucher;
+    localStorage.setItem('ftbrs_completed', JSON.stringify(_vd));
+    showVoucherModal();
+  }
+
+  function showVoucherModal() {
+    document.getElementById('modal-voucher-code').textContent = _vd.voucher;
     document.getElementById('voucher-modal').style.display = 'block';
     document.body.style.overflow = 'hidden';
   }
@@ -1008,6 +1013,17 @@
   function scrollToForm() {
     document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' });
   }
+
+  /* ---- RESTAURA VOUCHER SE JÁ GERADO ---- */
+  (function() {
+    const saved = localStorage.getItem('ftbrs_completed');
+    if (saved) {
+      try {
+        _vd = JSON.parse(saved);
+        showVoucherModal();
+      } catch(e) { localStorage.removeItem('ftbrs_completed'); }
+    }
+  })();
 
   /* ---- SCROLL REVEAL ---- */
   const revealObs = new IntersectionObserver((entries) => {
