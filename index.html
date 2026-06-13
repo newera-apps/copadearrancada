@@ -995,16 +995,20 @@
       { title: 'Não foi\ndessa vez',            prize: 'Não ganhou',                   type: 'loss'  },
       { title: 'Tente\nnovamente',              prize: null,                           type: 'retry' }
     ];
-    const LIMITS = { 'Clog Actvitta': 180, 'Clog Moleca': 180 };
+    const LIMITS = { clogs: 200, 'Kit Glimmer FuelTech Edition': 180 };
 
     const TAU  = Math.PI * 2;
     let PRIZES = BASE_PRIZES.slice();
     let SLICE  = TAU / PRIZES.length;
 
     function rebuildPrizes(counts) {
+      const clogTotal = (counts['Clog Actvitta'] || 0) + (counts['Clog Moleca'] || 0);
       PRIZES = BASE_PRIZES.filter(p => {
-        const lim = LIMITS[p.prize];
-        return !lim || (counts[p.prize] || 0) < lim;
+        if (p.prize === 'Clog Actvitta' || p.prize === 'Clog Moleca')
+          return clogTotal < LIMITS.clogs;
+        if (LIMITS[p.prize] !== undefined)
+          return (counts[p.prize] || 0) < LIMITS[p.prize];
+        return true;
       });
       SLICE = TAU / PRIZES.length;
     }
