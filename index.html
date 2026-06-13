@@ -810,7 +810,10 @@
     </div>
 
     <div style="background:#161616; border-radius:12px; padding:16px; margin-bottom:20px; border:1px solid rgba(255,255,255,.07); text-align:left;">
-      <p style="font-size:.7rem; letter-spacing:.18em; color:#E12529; font-family:'Roboto',sans-serif; font-weight:700; text-transform:uppercase; margin-bottom:8px;">🎯 Roleta de Brindes</p>
+      <p style="display:flex; align-items:center; gap:6px; font-size:.7rem; letter-spacing:.18em; color:#E12529; font-family:'Roboto',sans-serif; font-weight:700; text-transform:uppercase; margin-bottom:8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        Roleta de Brindes
+      </p>
       <p style="font-size:.88rem; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; line-height:1.65;">
         Venha girar a roleta no <strong style="color:#fff;">estande da BR Sport</strong>!<br>
         <span style="font-size:.8rem; color:rgba(255,255,255,.4);">Apresente este voucher e gire para concorrer a um brinde exclusivo.</span>
@@ -1387,8 +1390,20 @@
             <p class="f-anton" style="font-size:1.5rem; color:#fff; letter-spacing:.1em;">${savedVoucher}</p>
           </div>` : ''}
 
+          ${!ganhou && !ROLETA_ATIVA ? `<div style="background:#161616; border-radius:12px; padding:16px; margin-bottom:10px; border:1px solid rgba(255,255,255,.07); text-align:left;">
+            <p style="display:flex; align-items:center; gap:6px; font-size:.7rem; letter-spacing:.18em; color:#E12529; font-family:'Roboto',sans-serif; font-weight:700; text-transform:uppercase; margin-bottom:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              Roleta de Brindes
+            </p>
+            <p style="font-size:.88rem; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; line-height:1.65;">
+              Venha girar a roleta no <strong style="color:#fff;">estande da BR Sport</strong>!<br>
+              <span style="font-size:.8rem; color:rgba(255,255,255,.4);">Apresente este voucher e gire para concorrer a um brinde exclusivo.</span>
+            </p>
+          </div>` : ''}
+
           <div style="background:#161616; border-radius:12px; padding:13px 14px; margin-bottom:16px; border:1px solid rgba(255,255,255,.06);">
             <p style="font-size:.8rem; color:rgba(255,255,255,.55); font-family:'Roboto',sans-serif; line-height:1.6;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#E12529" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
               <span style="color:#E12529; font-weight:700;">Local de resgate:</span><br>
               Estande BR Sport — Autódromo FuelTech Velopark<br>
               <span style="font-size:.75rem; color:rgba(255,255,255,.3);">Apresente este voucher + siga @brsport.oficial</span>
