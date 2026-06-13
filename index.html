@@ -409,7 +409,7 @@
       </h2>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+    <div class="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
 
       <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
         <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#E12529;">
@@ -422,14 +422,7 @@
         <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#E12529;">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v13h18V9"/><path d="M21 9H3l3-7h12l3 7z"/><line x1="12" y1="9" x2="12" y2="22"/></svg>
         </div>
-        <h4 class="f-anton text-base uppercase text-white leading-tight">Clog<br><span class="text-red">Actvitta</span></h4>
-      </div>
-
-      <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
-        <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#E12529;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v13h18V9"/><path d="M21 9H3l3-7h12l3 7z"/><line x1="12" y1="9" x2="12" y2="22"/></svg>
-        </div>
-        <h4 class="f-anton text-base uppercase text-white leading-tight">Clog<br><span class="text-red">Moleca</span></h4>
+        <h4 class="f-anton text-base uppercase text-white leading-tight"><span class="text-red">Clog</span></h4>
       </div>
 
       <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
@@ -730,7 +723,7 @@
           <span class="faq-plus flex-shrink-0">+</span>
         </button>
         <div class="faq-body px-6">
-          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">É uma ativação interativa no estande da BR Sport onde você gira uma roleta e pode ganhar brindes exclusivos desta etapa: Kit Glimmer FuelTech Edition, Clog Actvitta, Clog Moleca ou Gym Bag BR Sport.</p>
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">É uma ativação interativa no estande da BR Sport onde você gira uma roleta e pode ganhar brindes exclusivos desta etapa: Kit Glimmer FuelTech Edition, Clog ou Gym Bag BR Sport.</p>
         </div>
       </div>
 
@@ -837,8 +830,7 @@
   <!-- Prizes chips -->
   <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:7px; justify-content:center; padding:0 16px; max-width:460px;">
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Kit Glimmer FuelTech Edition</span>
-    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Clog Actvitta</span>
-    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Clog Moleca</span>
+    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Clog</span>
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Gym Bag BR Sport</span>
   </div>
 
@@ -985,27 +977,22 @@
   (function() {
     const BASE_PRIZES = [
       { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win'   },
-      { title: 'Clog\nActvitta',                prize: 'Clog Actvitta',                type: 'win'   },
-      { title: 'Clog\nMoleca',                  prize: 'Clog Moleca',                  type: 'win'   },
+      { title: 'Clog',                          prize: 'Clog',                         type: 'win'   },
       { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win'   },
       { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win'   },
-      { title: 'Clog\nActvitta',                prize: 'Clog Actvitta',                type: 'win'   },
-      { title: 'Clog\nMoleca',                  prize: 'Clog Moleca',                  type: 'win'   },
+      { title: 'Clog',                          prize: 'Clog',                         type: 'win'   },
       { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win'   },
       { title: 'Não foi\ndessa vez',            prize: 'Não ganhou',                   type: 'loss'  },
       { title: 'Tente\nnovamente',              prize: null,                           type: 'retry' }
     ];
-    const LIMITS = { clogs: 200, 'Kit Glimmer FuelTech Edition': 180 };
+    const LIMITS = { 'Clog': 200, 'Kit Glimmer FuelTech Edition': 180 };
 
     const TAU  = Math.PI * 2;
     let PRIZES = BASE_PRIZES.slice();
     let SLICE  = TAU / PRIZES.length;
 
     function rebuildPrizes(counts) {
-      const clogTotal = (counts['Clog Actvitta'] || 0) + (counts['Clog Moleca'] || 0);
       PRIZES = BASE_PRIZES.filter(p => {
-        if (p.prize === 'Clog Actvitta' || p.prize === 'Clog Moleca')
-          return clogTotal < LIMITS.clogs;
         if (LIMITS[p.prize] !== undefined)
           return (counts[p.prize] || 0) < LIMITS[p.prize];
         return true;
