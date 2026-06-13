@@ -1097,7 +1097,7 @@
         localStorage.setItem('ftbrs2_completed', '1');
         localStorage.setItem('ftbrs2_premio', '');
         const params = new URLSearchParams({
-          datetime, nome, email, telefone: phone, voucher, premio: 'Café BR Sport'
+          datetime, nome, email, telefone: phone, cidade, estado, voucher, premio: 'Café BR Sport'
         });
         fetch(SHEETS_URL + '?' + params.toString(), { redirect: 'follow' }).catch(() => {});
         document.getElementById('vs-voucher').textContent = voucher;
@@ -1332,7 +1332,7 @@
     function sendToSheets(premio) {
       const params = new URLSearchParams({
         datetime: _vd.datetime, nome: _vd.nome, email: _vd.email,
-        telefone: _vd.phone, voucher: _vd.voucher || '', premio
+        telefone: _vd.phone, cidade: _vd.cidade, estado: _vd.estado, voucher: _vd.voucher || '', premio
       });
       fetch(SHEETS_URL + '?' + params.toString(), { redirect: 'follow' })
         .catch(e => console.warn('Sheets:', e));
