@@ -795,6 +795,40 @@
      ============================================================ -->
 <div id="retorno-screen" style="display:none; position:fixed; inset:0; z-index:9999; background:#080808; overflow-y:auto;"></div>
 
+<!-- VOUCHER SCREEN (exibida quando ROLETA_ATIVA = false) -->
+<div id="voucher-screen" style="display:none; position:fixed; inset:0; z-index:9999; background:#080808; overflow-y:auto; flex-direction:column; align-items:center; justify-content:center; padding:24px; box-sizing:border-box;">
+  <div style="max-width:480px; width:100%; text-align:center;">
+
+    <div style="color:#E12529; margin-bottom:14px; display:flex; justify-content:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+    </div>
+    <h2 class="f-anton" style="font-size:clamp(1.6rem,5vw,2.1rem); color:#fff; text-transform:uppercase; line-height:1.2; margin-bottom:18px;">Seu voucher<br>está pronto!</h2>
+
+    <div style="background:#161616; border-radius:12px; padding:14px 16px; margin-bottom:14px; border:1px solid rgba(225,37,41,.2); text-align:center;">
+      <p style="font-size:.6rem; letter-spacing:.28em; color:#4ade80; font-family:'Roboto',sans-serif; margin-bottom:5px; text-transform:uppercase;">Voucher do Café BR Sport</p>
+      <p id="vs-voucher" class="f-anton" style="font-size:1.5rem; color:#fff; letter-spacing:.1em;"></p>
+    </div>
+
+    <div style="background:#161616; border-radius:12px; padding:16px; margin-bottom:20px; border:1px solid rgba(255,255,255,.07); text-align:left;">
+      <p style="font-size:.7rem; letter-spacing:.18em; color:#E12529; font-family:'Roboto',sans-serif; font-weight:700; text-transform:uppercase; margin-bottom:8px;">🎯 Roleta de Brindes</p>
+      <p style="font-size:.88rem; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; line-height:1.65;">
+        Venha girar a roleta no <strong style="color:#fff;">estande da BR Sport</strong>, ao lado da torre!<br>
+        <span style="font-size:.8rem; color:rgba(255,255,255,.4);">Apresente este voucher e gire para concorrer a um brinde exclusivo.</span>
+      </p>
+    </div>
+
+    <a href="https://www.instagram.com/brsport.oficial" target="_blank" class="btn-red" style="padding:15px 24px; display:flex; justify-content:center; text-decoration:none; width:100%; box-sizing:border-box; margin-bottom:10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      Seguir @brsport.oficial
+    </a>
+    <button onclick="openMapa()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:50px; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; font-size:.88rem; font-weight:500; cursor:pointer; letter-spacing:.04em; box-sizing:border-box;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Ver mapa do evento
+    </button>
+
+  </div>
+</div>
+
 <!-- ============================================================
      ROLETA SCREEN
      ============================================================ -->
@@ -902,6 +936,13 @@
      JAVASCRIPT
      ============================================================ -->
 <script>
+  /* ================================================================
+     TOGGLE ROLETA — altere apenas esta linha para reativar a roda
+     true  = mostra a roleta no site
+     false = só gera voucher do café (roleta presencial no estande)
+     ================================================================ */
+  const ROLETA_ATIVA = false;
+
   /* ---- MAPA ---- */
   function openMapa() {
     const lb = document.getElementById('mapa-lightbox');
@@ -989,7 +1030,20 @@
     _vd = { nome, email, phone, cidade, estado, datetime, voucher };
     localStorage.setItem('ftbrs2_voucher', voucher);
     document.getElementById('form-wrap').style.display = 'none';
-    startRoleta();
+
+    if (ROLETA_ATIVA) {
+      startRoleta();
+    } else {
+      localStorage.setItem('ftbrs2_completed', '1');
+      localStorage.setItem('ftbrs2_premio', '');
+      const params = new URLSearchParams({
+        datetime, nome, email, telefone: phone, voucher, premio: 'Café BR Sport'
+      });
+      fetch(SHEETS_URL + '?' + params.toString(), { redirect: 'follow' }).catch(() => {});
+      document.getElementById('vs-voucher').textContent = voucher;
+      document.getElementById('voucher-screen').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   function scrollToForm() {
