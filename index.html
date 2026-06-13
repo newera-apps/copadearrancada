@@ -1088,15 +1088,16 @@
   /* ---- ROLETA ---- */
   (function() {
     const BASE_PRIZES = [
-      { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win'   },
-      { title: 'Clog',                          prize: 'Clog',                         type: 'win'   },
-      { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win'   },
-      { title: 'Caneta\nBR Sport',              prize: 'Caneta BR Sport',              type: 'win'   },
-      { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win'   },
-      { title: 'Clog',                          prize: 'Clog',                         type: 'win'   },
-      { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win'   },
-      { title: 'Caneta\nBR Sport',              prize: 'Caneta BR Sport',              type: 'win'   },
-      { title: 'Tente\nnovamente',              prize: null,                           type: 'retry' }
+      { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win',   weight: 2 },
+      { title: 'Clog',                          prize: 'Clog',                         type: 'win',   weight: 1 },
+      { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win',   weight: 3 },
+      { title: 'Caneta\nBR Sport',              prize: 'Caneta BR Sport',              type: 'win',   weight: 3 },
+      { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win',   weight: 2 },
+      { title: 'Clog',                          prize: 'Clog',                         type: 'win',   weight: 1 },
+      { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win',   weight: 3 },
+      { title: 'Caneta\nBR Sport',              prize: 'Caneta BR Sport',              type: 'win',   weight: 3 },
+      { title: 'Tente\nnovamente',              prize: null,                           type: 'retry', weight: 1 },
+      { title: 'Não foi\ndessa vez',            prize: 'Não ganhou',                   type: 'loss',  weight: 1 }
     ];
     const LIMITS = { 'Clog': 200, 'Kit Glimmer FuelTech Edition': 180 };
 
@@ -1169,6 +1170,16 @@
     }
     function randomFloat() { return randomUint32() / 0x100000000; }
 
+    function weightedPick() {
+      const total = PRIZES.reduce((s, p) => s + p.weight, 0);
+      let r = randomFloat() * total;
+      for (let i = 0; i < PRIZES.length; i++) {
+        r -= PRIZES[i].weight;
+        if (r <= 0) return i;
+      }
+      return PRIZES.length - 1;
+    }
+
     function normalizeAngle(a) { return ((a % TAU) + TAU) % TAU; }
     function selectedIndex()   { return Math.floor(normalizeAngle(-rotation) / SLICE) % PRIZES.length; }
 
@@ -1228,7 +1239,7 @@
       btn.textContent = 'Girando...';
       document.getElementById('rl-hint').style.opacity = '0';
 
-      const ti     = randomInt(PRIZES.length);
+      const ti     = weightedPick();
       const offset = (randomFloat() * .68 - .34) * SLICE;
       const tc     = ti * SLICE + SLICE / 2 + offset;
       const des    = normalizeAngle(-tc);
