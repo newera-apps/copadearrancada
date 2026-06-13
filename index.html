@@ -409,7 +409,7 @@
       </h2>
     </div>
 
-    <div class="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
 
       <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
         <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#E12529;">
@@ -430,6 +430,13 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         </div>
         <h4 class="f-anton text-base uppercase text-white leading-tight">Gym Bag<br><span class="text-red">BR Sport</span></h4>
+      </div>
+
+      <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
+        <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#E12529;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+        </div>
+        <h4 class="f-anton text-base uppercase text-white leading-tight">Caneta<br><span class="text-red">BR Sport</span></h4>
       </div>
 
     </div>
@@ -723,7 +730,7 @@
           <span class="faq-plus flex-shrink-0">+</span>
         </button>
         <div class="faq-body px-6">
-          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">É uma ativação interativa no estande da BR Sport onde você gira uma roleta e pode ganhar brindes exclusivos desta etapa: Kit Glimmer FuelTech Edition, Clog ou Gym Bag BR Sport.</p>
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">É uma ativação interativa no estande da BR Sport onde você gira uma roleta e pode ganhar brindes exclusivos desta etapa: Kit Glimmer FuelTech Edition, Clog, Gym Bag BR Sport ou Caneta BR Sport.</p>
         </div>
       </div>
 
@@ -881,6 +888,7 @@
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Kit Glimmer FuelTech Edition</span>
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Clog</span>
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Gym Bag BR Sport</span>
+    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Caneta BR Sport</span>
   </div>
 
   <!-- WIN MODAL -->
@@ -956,7 +964,7 @@
      true  = site normal
      false = tela de manutenção (quem já tem voucher continua vendo resultado)
      ================================================================ */
-  const SITE_ATIVO = false;
+  const SITE_ATIVO = true;
 
   if (!SITE_ATIVO && !localStorage.getItem('ftbrs2_completed')) {
     document.getElementById('manutencao-screen').style.display = 'flex';
@@ -968,7 +976,7 @@
      true  = mostra a roleta no site
      false = só gera voucher do café (roleta presencial no estande)
      ================================================================ */
-  const ROLETA_ATIVA = false;
+  const ROLETA_ATIVA = true;
 
   /* ---- MAPA ---- */
   function openMapa() {
@@ -1083,10 +1091,11 @@
       { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win'   },
       { title: 'Clog',                          prize: 'Clog',                         type: 'win'   },
       { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win'   },
+      { title: 'Caneta\nBR Sport',              prize: 'Caneta BR Sport',              type: 'win'   },
       { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win'   },
       { title: 'Clog',                          prize: 'Clog',                         type: 'win'   },
       { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win'   },
-      { title: 'Não foi\ndessa vez',            prize: 'Não ganhou',                   type: 'loss'  },
+      { title: 'Caneta\nBR Sport',              prize: 'Caneta BR Sport',              type: 'win'   },
       { title: 'Tente\nnovamente',              prize: null,                           type: 'retry' }
     ];
     const LIMITS = { 'Clog': 200, 'Kit Glimmer FuelTech Edition': 180 };
