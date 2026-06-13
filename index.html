@@ -1099,14 +1099,21 @@
       { title: 'Tente\nnovamente',              prize: null,                           type: 'retry', weight:  4 },
       { title: 'Não foi\ndessa vez',            prize: 'Não ganhou',                   type: 'loss',  weight:  4 }
     ];
-    const LIMITS = { 'Clog': 200, 'Kit Glimmer FuelTech Edition': 180 };
+    const LIMITS = {
+      'Caneta BR Sport':  2000,  // 50% — sai da roleta ao atingir 2000
+      'Gym Bag BR Sport':  150,  // 25% — sai da roleta ao atingir 150
+      clogs_pins:          100   // 15% combinado (Clog + Kit Glimmer) — saem juntos ao atingir 100
+    };
 
     const TAU  = Math.PI * 2;
     let PRIZES = BASE_PRIZES.slice();
     let SLICE  = TAU / PRIZES.length;
 
     function rebuildPrizes(counts) {
+      const clogPinsTotal = (counts['Clog'] || 0) + (counts['Kit Glimmer FuelTech Edition'] || 0);
       PRIZES = BASE_PRIZES.filter(p => {
+        if (p.prize === 'Clog' || p.prize === 'Kit Glimmer FuelTech Edition')
+          return clogPinsTotal < LIMITS.clogs_pins;
         if (LIMITS[p.prize] !== undefined)
           return (counts[p.prize] || 0) < LIMITS[p.prize];
         return true;
