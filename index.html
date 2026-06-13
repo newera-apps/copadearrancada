@@ -1051,33 +1051,57 @@
     e.preventDefault();
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
-    btn.textContent = 'Aguarde...';
+    btn.textContent = 'Verificando...';
 
-    const nome    = document.getElementById('f-nome').value.trim();
-    const email   = document.getElementById('f-email').value.trim();
-    const phone   = document.getElementById('f-phone').value.trim();
-    const cidade  = document.getElementById('f-cidade').value.trim();
-    const estado  = document.getElementById('f-estado').value.trim();
-    const now     = new Date();
-    const datetime = now.toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' });
-    const voucher  = generateVoucher();
+    const nome   = document.getElementById('f-nome').value.trim();
+    const email  = document.getElementById('f-email').value.trim();
+    const phone  = document.getElementById('f-phone').value.trim();
+    const cidade = document.getElementById('f-cidade').value.trim();
+    const estado = document.getElementById('f-estado').value.trim();
 
-    _vd = { nome, email, phone, cidade, estado, datetime, voucher };
-    localStorage.setItem('ftbrs2_voucher', voucher);
-    document.getElementById('form-wrap').style.display = 'none';
+    const checkParams = new URLSearchParams({ action: 'check', email, telefone: phone });
+    fetch(SHEETS_URL + '?' + checkParams.toString(), { redirect: 'follow' })
+      .then(r => r.json())
+      .then(res => {
+        if (res.exists) {
+          btn.disabled = false;
+          btn.textContent = 'GARANTIR MEU VOUCHER';
+          let err = document.getElementById('form-dup-error');
+          if (!err) {
+            err = document.createElement('p');
+            err.id = 'form-dup-error';
+            err.style.cssText = 'color:#E12529;font-size:.85rem;text-align:center;margin-top:12px;font-family:Roboto,sans-serif;font-weight:600;';
+            btn.after(err);
+          }
+          err.textContent = 'Este e-mail ou telefone já está cadastrado.';
+          return;
+        }
+        continuar();
+      })
+      .catch(() => continuar());
 
-    if (ROLETA_ATIVA) {
-      startRoleta();
-    } else {
-      localStorage.setItem('ftbrs2_completed', '1');
-      localStorage.setItem('ftbrs2_premio', '');
-      const params = new URLSearchParams({
-        datetime, nome, email, telefone: phone, voucher, premio: 'Café BR Sport'
-      });
-      fetch(SHEETS_URL + '?' + params.toString(), { redirect: 'follow' }).catch(() => {});
-      document.getElementById('vs-voucher').textContent = voucher;
-      document.getElementById('voucher-screen').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+    function continuar() {
+      const now      = new Date();
+      const datetime = now.toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' });
+      const voucher  = generateVoucher();
+
+      _vd = { nome, email, phone, cidade, estado, datetime, voucher };
+      localStorage.setItem('ftbrs2_voucher', voucher);
+      document.getElementById('form-wrap').style.display = 'none';
+
+      if (ROLETA_ATIVA) {
+        startRoleta();
+      } else {
+        localStorage.setItem('ftbrs2_completed', '1');
+        localStorage.setItem('ftbrs2_premio', '');
+        const params = new URLSearchParams({
+          datetime, nome, email, telefone: phone, voucher, premio: 'Café BR Sport'
+        });
+        fetch(SHEETS_URL + '?' + params.toString(), { redirect: 'follow' }).catch(() => {});
+        document.getElementById('vs-voucher').textContent = voucher;
+        document.getElementById('voucher-screen').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
     }
   }
 
