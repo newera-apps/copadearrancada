@@ -1119,29 +1119,35 @@
     // planilha). Cada prêmio tem cota PRÓPRIA — um não consome o estoque do
     // outro. Quando a contagem atinge o limite, o prêmio sai da roleta.
     // AJUSTE estes números conforme o estoque físico real de cada brinde.
+    // Estoque por prêmio (total do evento; conta o que já saiu na planilha).
+    // Clog: 200 no total. Pins (Kit Glimmer): 63 já dados + 160 a soltar = 223.
     const LIMITS = {
       'Copo de Café BR Sport':        2000,
-      'Clog':                          160,
-      'Kit Glimmer FuelTech Edition':  160,
+      'Clog':                          200,
+      'Kit Glimmer FuelTech Edition':  223,
     };
 
-    // FLUSH DO CLOG: até as 18h de hoje (14/06/2026, 18h BRT = 21h UTC) o Clog
-    // fica dominante (~72%) para escoar o estoque restante. Depois do horário,
-    // volta sozinho ao peso normal (32,5%). O limite de 160 protege o estoque.
-    const CLOG_FLUSH_UNTIL   = Date.parse('2026-06-14T21:00:00Z');
-    const CLOG_WEIGHT_FLUSH  = 70;
-    const CLOG_WEIGHT_NORMAL = 13;
-    const clogWeight = () => Date.now() < CLOG_FLUSH_UNTIL ? CLOG_WEIGHT_FLUSH : CLOG_WEIGHT_NORMAL;
+    // FLUSH: até as 17h de hoje (14/06/2026, 17h BRT = 20h UTC) o Clog e os
+    // Pins (Kit Glimmer) ficam dominantes para escoar o estoque restante, e o
+    // Copo fica reduzido. Após o horário, os pesos voltam sozinhos ao normal
+    // (os de BASE_PRIZES). Os limites acima protegem contra dar além do estoque.
+    const FLUSH_UNTIL = Date.parse('2026-06-14T20:00:00Z');
+    const FLUSH_WEIGHTS = {
+      'Clog':                          50,
+      'Kit Glimmer FuelTech Edition':  50,
+      'Copo de Café BR Sport':          4,
+    };
 
     const TAU  = Math.PI * 2;
     let PRIZES = BASE_PRIZES.slice();
     let SLICE  = TAU / PRIZES.length;
 
     function rebuildPrizes(counts) {
-      const cw = clogWeight();
+      const flushing = Date.now() < FLUSH_UNTIL;
       PRIZES = BASE_PRIZES
         .filter(p => LIMITS[p.prize] === undefined || (counts[p.prize] || 0) < LIMITS[p.prize])
-        .map(p => p.prize === 'Clog' ? { ...p, weight: cw } : p);
+        .map(p => (flushing && FLUSH_WEIGHTS[p.prize] !== undefined)
+          ? { ...p, weight: FLUSH_WEIGHTS[p.prize] } : p);
       SLICE = TAU / PRIZES.length;
     }
 
