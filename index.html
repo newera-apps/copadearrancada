@@ -410,7 +410,7 @@
       </h2>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
 
       <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
         <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#E12529;">
@@ -424,13 +424,6 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v13h18V9"/><path d="M21 9H3l3-7h12l3 7z"/><line x1="12" y1="9" x2="12" y2="22"/></svg>
         </div>
         <h4 class="f-anton text-base uppercase text-white leading-tight"><span class="text-red">Clog</span></h4>
-      </div>
-
-      <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
-        <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:#E12529;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        </div>
-        <h4 class="f-anton text-base uppercase text-white leading-tight">Gym Bag<br><span class="text-red">BR Sport</span></h4>
       </div>
 
       <div class="rounded-2xl p-6 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
@@ -731,7 +724,7 @@
           <span class="faq-plus flex-shrink-0">+</span>
         </button>
         <div class="faq-body px-6">
-          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">É uma ativação interativa no estande da BR Sport onde você gira uma roleta e pode ganhar brindes exclusivos desta etapa: Kit Glimmer FuelTech Edition, Clog, Gym Bag BR Sport ou Copo de Café BR Sport.</p>
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">É uma ativação interativa no estande da BR Sport onde você gira uma roleta e pode ganhar brindes exclusivos desta etapa: Kit Glimmer FuelTech Edition, Clog ou Copo de Café BR Sport.</p>
         </div>
       </div>
 
@@ -889,7 +882,6 @@
   <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:7px; justify-content:center; padding:0 16px; max-width:460px;">
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Kit Glimmer FuelTech Edition</span>
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Clog</span>
-    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Gym Bag BR Sport</span>
     <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Copo de Café BR Sport</span>
   </div>
 
@@ -1115,20 +1107,17 @@
   (function() {
     const BASE_PRIZES = [
       { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win',   weight:  3 },
-      { title: 'Clog',                          prize: 'Clog',                         type: 'win',   weight:  3 },
-      { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win',   weight: 10 },
+      { title: 'Clog',                          prize: 'Clog',                         type: 'win',   weight: 13 },
       { title: 'Copo de\nCafé BR Sport',         prize: 'Copo de Café BR Sport',        type: 'win',   weight: 20 },
       { title: 'Kit Glimmer\nFuelTech Edition', prize: 'Kit Glimmer FuelTech Edition', type: 'win',   weight:  3 },
-      { title: 'Clog',                          prize: 'Clog',                         type: 'win',   weight:  3 },
-      { title: 'Gym Bag\nBR Sport',             prize: 'Gym Bag BR Sport',             type: 'win',   weight: 10 },
+      { title: 'Clog',                          prize: 'Clog',                         type: 'win',   weight: 13 },
       { title: 'Copo de\nCafé BR Sport',         prize: 'Copo de Café BR Sport',        type: 'win',   weight: 20 },
       { title: 'Tente\nnovamente',              prize: null,                           type: 'retry', weight:  4 },
       { title: 'Não foi\ndessa vez',            prize: 'Não ganhou',                   type: 'loss',  weight:  4 }
     ];
     const LIMITS = {
       'Copo de Café BR Sport': 2000,  // 50% — sai da roleta ao atingir 2000
-      'Gym Bag BR Sport':  150,  // 25% — sai da roleta ao atingir 150
-      clogs_pins:          100   // 15% combinado (Clog + Kit Glimmer) — saem juntos ao atingir 100
+      clogs_pins:          100   // Clog (32,5%) + Kit Glimmer (7,5%) combinados — saem juntos ao atingir o limite
     };
 
     const TAU  = Math.PI * 2;
