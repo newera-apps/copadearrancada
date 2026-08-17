@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mapa do Evento</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { margin: 0; padding: 0; width: 100%; height: 100%; }
+
+    #btn {
+      position: absolute;
+      bottom: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 1000;
+      padding: 12px 24px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #status {
+      position: absolute;
+      top: 10px; left: 50%; transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(255,255,255,.85);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: .85rem;
+      white-space: nowrap;
+      max-width: 90vw;
+      text-align: center;
+    }
+    .pin-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      transform-origin: center center;
+      transition: transform 0.15s ease-out;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.5));
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="status">Toque em "Onde Estou" para ativar o GPS</div>
+<button id="btn" onclick="startLocate()">Onde Estou</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+
+  const BOUNDS = [
+    [-29.8800, -51.2480],
+    [-29.8620, -51.2200]
+  ];
+
+  const map = L.map('map', { zoomControl: true, attributionControl: false });
+  L.imageOverlay('mapa-completo.jpeg', BOUNDS).addTo(map);
+  map.fitBounds(BOUNDS);
+
+  let marker   = null;
+  let circle   = null;
+  let pinImg   = null;
+  let sensorOk = false;
+
+  function setStatus(t) { document.getElementById('status').textContent = t; }
+
+  function buildIcon() {
+    return L.divIcon({
+      html: `<img class="pin-img" src="pinft.png" alt="pin">`,
+      className: '',
+      iconSize:   [48, 48],
+      iconAnchor: [24, 24],
+    });
+  }
+
+  // ── Bússola ───────────────────────────────────────────────────────
+  function onOrientation(e) {
+    let h = null;
+    if (e.webkitCompassHeading != null) {
+      h = e.webkitCompassHeading;
+    } else if (e.alpha != null) {
+      h = (360 - e.alpha) % 360;
+    }
+    if (h === null) return;
+
+    if (!sensorOk) {
+      sensorOk = true;
+      setStatus('Bússola ativa ✓');
+    }
+    if (pinImg) pinImg.style.transform = `rotate(${h}deg)`;
+  }
+
+  // Pede permissão de orientação APÓS o GPS já ter sido obtido
+  function startOrientation() {
+    if (typeof DeviceOrientationEvent?.requestPermission === 'function') {
+      // iOS 13+: pede permissão explícita — deve vir de gesto do usuário
+      DeviceOrientationEvent.requestPermission()
+        .then(s => {
+          if (s === 'granted') {
+            window.addEventListener('deviceorientation', onOrientation, true);
+          }
+          // Se negado, pin fica estático — silencioso
+        })
+        .catch(() => {});
+    } else {
+      // Android e outros
+      window.addEventListener('deviceorientationabsolute', onOrientation, true);
+      window.addEventListener('deviceorientation',         onOrientation, true);
+      setTimeout(() => {
+        if (!sensorOk) setStatus('GPS ativo ✓ · bússola indisponível');
+      }, 2000);
+    }
+  }
+
+  // ── GPS ───────────────────────────────────────────────────────────
+  function startLocate() {
+    // HTTPS é obrigatório para geolocalização em mobile
+    if (window.isSecureContext === false) {
+      setStatus('⚠ Necessário HTTPS para usar o GPS.');
+      document.getElementById('btn').disabled = false;
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      setStatus('GPS não suportado neste navegador.');
+      return;
+    }
+
+    setStatus('Obtendo localização...');
+    document.getElementById('btn').disabled = true;
+
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        // GPS obtido com sucesso — agora pede bússola (evita conflito de dialogs no iOS)
+        startOrientation();
+        onPosition(pos);
+
+        // Continua monitorando posição
+        navigator.geolocation.watchPosition(onPosition, onGpsError,
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 3000 });
+      },
+      onGpsError,
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+  }
+
+  function onPosition(pos) {
+    const { latitude: lat, longitude: lng, accuracy, heading: gpsH } = pos.coords;
+    const acc = Math.round(accuracy);
+
+    document.getElementById('btn').textContent = 'Onde Estou';
+    document.getElementById('btn').disabled = false;
+
+    if (!sensorOk) {
+      // GPS heading como fallback quando em movimento e sem bússola
+      if (gpsH != null && !isNaN(gpsH) && pinImg) {
+        pinImg.style.transform = `rotate(${gpsH}deg)`;
+      }
+      if (!sensorOk) setStatus(`GPS ativo ✓  ±${acc}m`);
+    }
+
+    if (marker) {
+      marker.setLatLng([lat, lng]);
+      circle.setLatLng([lat, lng]).setRadius(acc);
+    } else {
+      marker = L.marker([lat, lng], { icon: buildIcon() }).addTo(map);
+      circle = L.circle([lat, lng], {
+        radius: acc, color: 'blue', fillOpacity: 0.07, weight: 1
+      }).addTo(map);
+
+      setTimeout(() => {
+        pinImg = marker.getElement()?.querySelector('.pin-img');
+      }, 100);
+    }
+
+    map.setView([lat, lng]);
+  }
+
+  function onGpsError(err) {
+    document.getElementById('btn').disabled = false;
+    document.getElementById('btn').textContent = 'Onde Estou';
+
+    if (err.code === 1) {
+      // PERMISSION_DENIED — pode ser HTTP ou permissão do app negada
+      if (window.location.protocol === 'http:') {
+        setStatus('⚠ GPS requer HTTPS. Acesse via https://');
+      } else {
+        setStatus('Permissão de localização negada. Verifique as configurações do navegador.');
+      }
+    } else if (err.code === 2) {
+      setStatus('GPS indisponível. Ative a localização no dispositivo.');
+    } else if (err.code === 3) {
+      setStatus('Tempo esgotado. Vá para área aberta e tente novamente.');
+    } else {
+      setStatus('Erro ao obter localização.');
+    }
+  }
+</script>
+</body>
+</html>

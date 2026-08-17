@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<!-- v3.0.0 — 3º Etapa -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BR Sport + FuelTech — Copa FT BR Sport de Arrancada | 3º Etapa</title>
+  <meta name="description" content="Gire a roleta e escolha seu brinde na 3º etapa da Copa FT BR Sport de Arrancada, no Autódromo FuelTech Velopark. Cadastre-se, siga a BR Sport e garanta seu voucher.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            red: { DEFAULT: '#E12529', dark: '#b81e21', glow: 'rgba(225,37,41,0.35)' },
+            ink: { DEFAULT: '#080808', 2: '#0f0f0f', 3: '#161616', 4: '#1e1e1e' },
+          },
+          fontFamily: {
+            anton: ['Anton','sans-serif'],
+            roboto: ['Roboto','sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Roboto', sans-serif; background: #080808; color: #f0f0f0; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #080808; }
+    ::-webkit-scrollbar-thumb { background: #E12529; border-radius: 2px; }
+
+    /* ---- TYPOGRAPHY ---- */
+    .f-anton { font-family: 'Anton', sans-serif; }
+
+    /* ---- BUTTONS ---- */
+    .btn-red {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #E12529; color: #fff; border-radius: 10px; gap: 8px;
+      font-family: 'Roboto', sans-serif; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+      transition: background .25s, transform .25s, box-shadow .25s;
+      cursor: pointer; border: none;
+    }
+    .btn-red:hover { background: #b81e21; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(225,37,41,.5); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: transparent; color: #E12529; border: 2px solid #E12529; border-radius: 10px; gap: 8px;
+      font-family: 'Roboto', sans-serif; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+      transition: all .25s; cursor: pointer;
+    }
+    .btn-ghost:hover { background: #E12529; color: #fff; }
+
+    /* ---- HERO SLIDER ---- */
+    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; pointer-events: none; }
+    .slide.active { opacity: 1; pointer-events: auto; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-gradient {
+      background: linear-gradient(to bottom,
+        rgba(8,8,8,.45) 0%,
+        rgba(8,8,8,.62) 25%,
+        rgba(8,8,8,.88) 55%,
+        rgba(8,8,8,1) 82%);
+    }
+
+    /* ---- SLIDE TEXT ---- */
+    .slide-text { display: none; }
+    .slide-text.active { display: block; }
+
+    /* ---- SLIDER DOTS ---- */
+    .dot {
+      width: 8px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.3);
+      cursor: pointer; transition: all .3s;
+    }
+    .dot.active { background: #E12529; width: 28px; }
+
+    /* ---- TICKER ---- */
+    .ticker-track {
+      display: inline-flex; white-space: nowrap;
+      animation: ticker 22s linear infinite;
+    }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ---- REVEAL ON SCROLL ---- */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- RED ACCENT ---- */
+    .accent-line { width: 52px; height: 3px; background: #E12529; }
+    .section-label { font-family: 'Roboto', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .35em; text-transform: uppercase; color: #E12529; }
+
+    /* ---- PRODUCT CARD ---- */
+    .prod-card .card-img { transition: transform .55s ease; }
+    .prod-card:hover .card-img { transform: scale(1.06); }
+
+    /* ---- STEPS ---- */
+    .step-num {
+      min-width: 50px; width: 50px; height: 50px; border-radius: 50%;
+      background: #E12529; display: flex; align-items: center; justify-content: center;
+      font-family: 'Anton', sans-serif; font-size: 1.2rem; color: #fff; flex-shrink: 0;
+    }
+
+    /* ---- FORM ---- */
+    .f-input {
+      width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 10px;
+      color: #f0f0f0; padding: 14px 18px; font-family: 'Roboto', sans-serif; font-size: .95rem;
+      transition: border-color .25s; outline: none;
+    }
+    .f-input:focus { border-color: #E12529; }
+    .f-input::placeholder { color: #555; }
+    .f-input:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ---- FAQ ---- */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .faq-body.open { max-height: 420px; }
+    .faq-plus { transition: transform .3s; font-size: 1.5rem; line-height: 1; color: #E12529; }
+    .faq-plus.open { transform: rotate(45deg); }
+
+    /* ---- SUCCESS ---- */
+    #success-msg { display: none; }
+
+    /* ---- PULSE BORDER ---- */
+    @keyframes pulseRed {
+      0%, 100% { border-color: rgba(225,37,41,.25); }
+      50% { border-color: rgba(225,37,41,.7); }
+    }
+    .pulse-border { animation: pulseRed 2.5s infinite; }
+
+    /* ---- MOSAIC ---- */
+    .mosaic { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; height: 520px; border-radius: 20px; overflow: hidden; }
+    .mosaic .m-main { grid-row: 1 / 3; }
+    .mosaic img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s; display: block; }
+    .mosaic img:hover { transform: scale(1.04); }
+    @media (max-width: 768px) {
+      .mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; }
+      .mosaic .m-main { grid-row: auto; grid-column: 1 / 3; aspect-ratio: 4/3; }
+      .mosaic .m-sub { aspect-ratio: 1/1; }
+    }
+
+    /* ---- GLOW ---- */
+    .red-glow { text-shadow: 0 0 40px rgba(225,37,41,.5); }
+
+    /* ---- ROLETA SCREEN ---- */
+    #roleta-screen { position:fixed; inset:0; z-index:9999; background:#080808; overflow-y:auto; flex-direction:column; align-items:center; padding:20px 16px 48px; box-sizing:border-box; }
+    #rl-win-modal, #rl-loss-modal { align-items:center; justify-content:center; }
+    #rl-spin-btn:disabled { opacity:.35; cursor:default; }
+
+    /* ---- LAYOUT ---- */
+    .section-wrap { max-width: 1300px; width: 100%; margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR FIXA
+     ============================================================ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+     style="background: rgba(8,8,8,.85); backdrop-filter: blur(12px);">
+  <div class="section-wrap px-5 md:px-10 py-3 flex items-center justify-between gap-4">
+    <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-8 md:h-10 min-w-0 flex-shrink" style="filter: drop-shadow(0 0 8px rgba(255,255,255,.15));">
+    <a href="#formulario" class="btn-red px-5 py-2 text-xs md:text-sm flex-shrink-0">Quero participar<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></a>
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     01. HERO — A AÇÃO PRIMEIRO
+     ============================================================ -->
+<section id="hero" class="relative w-full overflow-hidden" style="min-height: 100svh;">
+
+  <!-- Slide backgrounds -->
+  <div class="absolute inset-0">
+    <div class="slide active" id="bg0">
+      <img src="assets/etapa3/DSC_9004.webp" alt="Carro de arrancada em burnout no Autódromo FuelTech Velopark">
+      <div class="hero-gradient absolute inset-0"></div>
+    </div>
+    <div class="slide" id="bg1">
+      <img src="assets/etapa3/DSC_9060.webp" alt="Moto de arrancada acelerando na pista do Velopark">
+      <div class="hero-gradient absolute inset-0"></div>
+    </div>
+    <div class="slide" id="bg2">
+      <img src="assets/etapa3/DSC_9806.webp" alt="Moto de arrancada na largada da Copa FT BR Sport">
+      <div class="hero-gradient absolute inset-0"></div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="section-wrap relative z-10 flex flex-col justify-center min-h-screen px-6 md:px-16 pb-14 pt-24 w-full">
+
+    <!-- Logo -->
+    <div class="flex flex-wrap items-center gap-4 mb-8">
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Selo Copa FT BR Sport de Arrancada" class="h-[133px] md:h-[173px] drop-shadow-2xl">
+    </div>
+
+    <!-- Slide texts -->
+    <div class="slide-text active" id="txt0">
+      <p class="section-label mb-3">Terceira Etapa</p>
+      <h1 class="f-anton text-5xl md:text-7xl lg:text-[90px] leading-none uppercase mb-5 max-w-3xl">
+        Gire a roleta.<br><span class="text-red">Escolha seu brinde.</span>
+      </h1>
+      <p class="text-white/75 text-base md:text-xl max-w-xl mb-4 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Na 3º etapa da Copa FT BR Sport de Arrancada, a BR Sport preparou uma nova experiência para quem estiver no Autódromo FuelTech Velopark.
+      </p>
+      <p class="text-white/55 text-sm md:text-base max-w-xl mb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Cadastre-se, siga a BR Sport e receba seu voucher para participar da roleta de brindes.
+      </p>
+
+      <!-- Você pode ganhar -->
+      <div class="mb-8">
+        <p class="text-white/40 text-xs tracking-[.25em] uppercase mb-3" style="font-family:'Roboto',sans-serif;font-weight:700;">Você pode ganhar</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="f-anton text-xs md:text-sm uppercase px-4 py-2 rounded-full" style="background:rgba(225,37,41,.14);border:1px solid rgba(225,37,41,.35);color:#fff;">Kit Clog + Pins FT</span>
+          <span class="f-anton text-xs md:text-sm uppercase px-4 py-2 rounded-full" style="background:rgba(225,37,41,.14);border:1px solid rgba(225,37,41,.35);color:#fff;">Copo BR Sport</span>
+          <span class="f-anton text-xs md:text-sm uppercase px-4 py-2 rounded-full" style="background:rgba(225,37,41,.14);border:1px solid rgba(225,37,41,.35);color:#fff;">Caneta BR Sport</span>
+        </div>
+      </div>
+
+      <a href="#formulario" class="btn-red px-8 py-4 text-sm md:text-base ">Quero participar<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></a>
+      <p class="text-white/30 text-xs mt-4 italic" style="font-family:'Roboto',sans-serif;">Ativação sujeita à disponibilidade de brindes.</p>
+    </div>
+
+    <div class="slide-text" id="txt1">
+      <p class="section-label mb-3">O Brinde Principal</p>
+      <h1 class="f-anton text-5xl md:text-7xl lg:text-[90px] leading-none uppercase mb-5 max-w-3xl">
+        Kit Clog<br><span class="text-red">+ Pins FT</span>
+      </h1>
+      <p class="text-white/75 text-base md:text-xl max-w-xl mb-8 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Um clog acompanhado de pins inspirados no universo FuelTech. Escolha seu tamanho no cadastro e gire a roleta para concorrer.
+      </p>
+      <a href="#formulario" class="btn-red px-8 py-4 text-sm md:text-base ">Quero participar<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></a>
+    </div>
+
+    <div class="slide-text" id="txt2">
+      <p class="section-label mb-3">31 de Julho a 2 de Agosto</p>
+      <h1 class="f-anton text-5xl md:text-7xl lg:text-[90px] leading-none uppercase mb-5 max-w-3xl">
+        3º Etapa<br><span class="text-red">no Velopark</span>
+      </h1>
+      <p class="text-white/75 text-base md:text-xl max-w-xl mb-8 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Velocidade, competição e experiência no Autódromo FuelTech Velopark, em Nova Santa Rita (RS). Venha viver a Copa de perto.
+      </p>
+      <a href="#formulario" class="btn-red px-8 py-4 text-sm md:text-base ">Quero participar<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></a>
+    </div>
+
+    <!-- Dots -->
+    <div class="flex items-center gap-2 mt-10">
+      <div class="dot active" onclick="goSlide(0)"></div>
+      <div class="dot" onclick="goSlide(1)"></div>
+      <div class="dot" onclick="goSlide(2)"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     TICKER
+     ============================================================ -->
+<div class="overflow-hidden py-3" style="background:#E12529;">
+  <div class="ticker-track f-anton text-sm tracking-widest text-white">
+    <span class="mx-8">TERCEIRA ETAPA</span><span class="mx-4">✦</span>
+    <span class="mx-8">ROLETA DE BRINDES</span><span class="mx-4">✦</span>
+    <span class="mx-8">KIT CLOG + PINS FT</span><span class="mx-4">✦</span>
+    <span class="mx-8">COPA FT BR SPORT DE ARRANCADA</span><span class="mx-4">✦</span>
+    <span class="mx-8">AUTÓDROMO FUELTECH VELOPARK</span><span class="mx-4">✦</span>
+    <span class="mx-8">BR SPORT + FUELTECH</span><span class="mx-4">✦</span>
+    <span class="mx-8">TERCEIRA ETAPA</span><span class="mx-4">✦</span>
+    <span class="mx-8">ROLETA DE BRINDES</span><span class="mx-4">✦</span>
+    <span class="mx-8">KIT CLOG + PINS FT</span><span class="mx-4">✦</span>
+    <span class="mx-8">COPA FT BR SPORT DE ARRANCADA</span><span class="mx-4">✦</span>
+    <span class="mx-8">AUTÓDROMO FUELTECH VELOPARK</span><span class="mx-4">✦</span>
+    <span class="mx-8">BR SPORT + FUELTECH</span><span class="mx-4">✦</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     02. COMO PARTICIPAR
+     ============================================================ -->
+<section id="como-participar" class="py-24 md:py-32 reveal" style="background:#0f0f0f;">
+  <div class="section-wrap px-6 md:px-14">
+
+    <div class="text-center mb-16">
+      <p class="section-label mb-4">Como Participar</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-6xl uppercase leading-tight max-w-3xl mx-auto">
+        É simples <span class="text-red">participar.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-x-12 gap-y-8 max-w-4xl mx-auto">
+
+      <div class="flex items-start gap-5">
+        <div class="step-num">1</div>
+        <div class="pt-1">
+          <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Cadastre-se</p>
+          <p class="text-white/45 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">Preencha seus dados no formulário para participar da ação.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-5">
+        <div class="step-num">2</div>
+        <div class="pt-1">
+          <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Siga a BR Sport</p>
+          <p class="text-white/45 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">Depois do cadastro, siga a página da BR Sport no Instagram.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-5">
+        <div class="step-num">3</div>
+        <div class="pt-1">
+          <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Receba seu voucher</p>
+          <p class="text-white/45 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">O voucher será liberado após o cadastro e poderá ser apresentado no espaço da BR Sport.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-5">
+        <div class="step-num">4</div>
+        <div class="pt-1">
+          <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Gire a roleta</p>
+          <p class="text-white/45 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">Apresente o voucher e confirme que está seguindo a BR Sport para ter direito a uma tentativa na roleta.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-5 md:col-span-2 md:max-w-[calc(50%-1.5rem)]">
+        <div class="step-num">5</div>
+        <div class="pt-1">
+          <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Resgate seu brinde</p>
+          <p class="text-white/45 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">Se a roleta indicar um dos brindes disponíveis, apresente o resultado da sua participação à equipe da BR Sport e faça o resgate no estande.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-16">
+      <p class="f-anton text-2xl md:text-3xl uppercase text-white mb-3">Uma tentativa por participante.</p>
+      <p class="text-white/35 text-sm max-w-2xl mx-auto leading-relaxed italic" style="font-family:'Roboto',sans-serif;">
+        Participação condicionada ao cadastro, ao seguimento da página da BR Sport e à disponibilidade dos brindes.
+      </p>
+      <div class="mt-10">
+        <a href="#formulario" class="btn-red px-10 py-5 text-sm md:text-base ">Garantir meu voucher<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     03. CADASTRO
+     ============================================================ -->
+<section id="formulario" class="relative py-24 md:py-32 overflow-hidden reveal">
+  <!-- Background -->
+  <div class="absolute inset-0" style="background:#080808;"></div>
+  <div class="absolute inset-0 opacity-[.04]">
+    <img src="assets/etapa3/DSC_9082.webp" alt="" class="w-full h-full object-cover">
+  </div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+       style="background:radial-gradient(circle, rgba(225,37,41,.15) 0%, transparent 70%);"></div>
+
+  <div class="section-wrap relative z-10 px-6 md:px-14">
+
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <p class="section-label mb-4">Cadastro</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-6xl lg:text-7xl uppercase leading-tight max-w-4xl mx-auto mb-4">
+        Garanta sua
+        <span class="text-red">participação</span>
+      </h2>
+      <p class="text-white/60 max-w-2xl mx-auto leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Preencha o formulário abaixo com seus dados e siga a BR Sport para receber seu voucher.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+
+      <!-- Info lateral -->
+      <div>
+        <h3 class="f-anton text-2xl uppercase mb-8 text-white">Antes de girar</h3>
+        <div class="space-y-6 mb-10">
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">1</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Preencha seus dados <span class="md:hidden">abaixo</span><span class="hidden md:inline">ao lado</span>.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">Cadastro rápido, sem complicação.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">2</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Informe gênero e tamanho.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">É o que define a grade do Kit Clog disponível para você.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5">
+            <div class="step-num">3</div>
+            <div class="pt-1">
+              <p class="font-bold text-white mb-1" style="font-family:'Roboto',sans-serif;">Gire a roleta e resgate.</p>
+              <p class="text-white/45 text-sm" style="font-family:'Roboto',sans-serif;">Apresente o voucher no espaço BR Sport para retirar seu brinde.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="rounded-2xl p-5" style="background:#161616;border:1px solid rgba(255,255,255,.07);">
+          <p class="text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;color:rgba(255,255,255,.6);">
+            <span style="color:#E12529;font-weight:700;display:inline-flex;align-items:center;gap:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Local:</span> Espaço BR Sport no Autódromo FuelTech Velopark.<br>
+            Apresente seu voucher + siga @brsport.oficial para participar.<br>
+            <span style="color:rgba(255,255,255,.4);font-size:.8rem;">Sujeito à disponibilidade dos brindes durante o evento.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Formulário -->
+      <div class="relative">
+        <div class="absolute -inset-px rounded-3xl pulse-border" style="border:1px solid rgba(225,37,41,.3);border-radius:24px;pointer-events:none;"></div>
+        <div class="rounded-3xl p-8 md:p-10" style="background:#161616;border-radius:24px;">
+
+          <!-- Form -->
+          <div id="form-wrap">
+            <h3 class="f-anton text-2xl md:text-3xl uppercase text-white mb-1">Cadastre-se agora</h3>
+            <p class="text-white/35 text-sm mb-8" style="font-family:'Roboto',sans-serif;">Gratuito · Uma tentativa por participante.</p>
+
+            <form id="lead-form" onsubmit="handleSubmit(event)" novalidate>
+              <div class="space-y-4 mb-6">
+                <div>
+                  <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">NOME COMPLETO *</label>
+                  <input type="text" name="nome" id="f-nome" required placeholder="Seu nome completo" class="f-input">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">E-MAIL *</label>
+                  <input type="email" name="email" id="f-email" required placeholder="seu@email.com" class="f-input">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">TELEFONE *</label>
+                  <input type="tel" name="telefone" id="f-phone" required placeholder="(00) 00000-0000" class="f-input" oninput="phoneMask(this)">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">CIDADE *</label>
+                    <input type="text" name="cidade" id="f-cidade" required placeholder="Sua cidade" class="f-input">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">ESTADO *</label>
+                    <select name="estado" id="f-estado" required class="f-input" style="cursor:pointer;">
+                      <option value="" disabled selected>UF</option>
+                      <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+                      <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                      <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+                      <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+                      <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+                      <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+                      <option>SP</option><option>SE</option><option>TO</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Gênero + Tamanho (grade do Kit Clog) -->
+                <div class="rounded-2xl p-4" style="background:#0f0f0f;border:1px solid rgba(225,37,41,.18);">
+                  <p class="text-xs mb-3 leading-relaxed" style="font-family:'Roboto',sans-serif;color:rgba(255,255,255,.5);">
+                    Informe o gênero e o quanto calça para conferirmos a disponibilidade.
+                  </p>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">GÊNERO *</label>
+                      <select name="genero" id="f-genero" required class="f-input" style="cursor:pointer;" onchange="updateTamanhos()">
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="F">Feminino</option>
+                        <option value="M">Masculino</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-bold text-white/55 mb-2 tracking-wide" style="font-family:'Roboto',sans-serif;">TAMANHO *</label>
+                      <select name="tamanho" id="f-tamanho" required class="f-input" style="cursor:pointer;" disabled>
+                        <option value="" disabled selected>Gênero primeiro</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-red w-full py-5 text-sm md:text-base " id="submit-btn">
+                ENVIAR CADASTRO
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              </button>
+
+              <p class="text-white/25 text-xs text-center mt-4 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+                Seus dados serão utilizados pela BR Sport para ações de relacionamento e comunicação futuras, de acordo com as condições apresentadas no cadastro.
+              </p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     05. OS BRINDES
+     ============================================================ -->
+<section id="brindes" class="py-24 md:py-32 reveal" style="background:#0f0f0f;">
+  <div class="section-wrap px-6 md:px-14">
+
+    <div class="text-center mb-14">
+      <p class="section-label mb-4">Os Brindes</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-5xl uppercase leading-tight max-w-2xl mx-auto">
+        O que pode sair <span class="text-red">na roleta?</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+
+      <div class="rounded-2xl p-8 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
+        <div class="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center" style="background:#E12529;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v13h18V9"/><path d="M21 9H3l3-7h12l3 7z"/><line x1="12" y1="9" x2="12" y2="22"/></svg>
+        </div>
+        <h4 class="f-anton text-xl uppercase text-white leading-tight mb-3">Kit Clog<br><span class="text-red">+ Pins FT</span></h4>
+        <p class="text-white/50 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">Um clog acompanhado de pins inspirados no universo FuelTech.</p>
+      </div>
+
+      <div class="rounded-2xl p-8 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
+        <div class="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center" style="background:#E12529;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+        </div>
+        <h4 class="f-anton text-xl uppercase text-white leading-tight mb-3">Copo<br><span class="text-red">BR Sport</span></h4>
+        <p class="text-white/50 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">Um copo personalizado com a identidade da BR Sport.</p>
+      </div>
+
+      <div class="rounded-2xl p-8 text-center" style="background:#161616; border:1px solid rgba(225,37,41,.15);">
+        <div class="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center" style="background:#E12529;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+        </div>
+        <h4 class="f-anton text-xl uppercase text-white leading-tight mb-3"><span class="text-red">Caneta</span></h4>
+        <p class="text-white/50 text-sm leading-relaxed" style="font-family:'Roboto',sans-serif;">Uma caneta personalizada para levar a experiência da Copa com você.</p>
+      </div>
+
+    </div>
+
+    <div class="relative rounded-2xl overflow-hidden shadow-2xl max-w-3xl mx-auto mt-12" style="border:1px solid rgba(225,37,41,.18);">
+      <img src="assets/etapa3/DSC_8964.webp" alt="Arrancada no Autódromo FuelTech Velopark" class="w-full object-cover" style="max-height:440px;">
+      <div class="absolute inset-x-0 bottom-0 p-5" style="background:linear-gradient(to top, rgba(0,0,0,.8), transparent);">
+        <p class="f-anton text-lg md:text-xl uppercase text-white leading-tight">Gire e descubra.</p>
+        <p class="text-white/60 text-xs md:text-sm" style="font-family:'Roboto',sans-serif;">Espaço BR Sport no Autódromo FuelTech Velopark</p>
+      </div>
+    </div>
+
+    <p class="text-center text-white/30 text-sm mt-10 max-w-2xl mx-auto leading-relaxed italic" style="font-family:'Roboto',sans-serif;">
+      Os brindes estão sujeitos à disponibilidade. A participação na roleta não garante o recebimento de um brinde específico.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     06. A COLLAB FUELTECH + BR SPORT
+     ============================================================ -->
+<section id="collab" class="py-24 md:py-32 reveal" style="background:#080808;">
+  <div class="section-wrap px-6 md:px-14">
+    <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+
+      <!-- Texto -->
+      <div>
+        <p class="section-label mb-4">A Collab</p>
+        <div class="accent-line mb-6"></div>
+        <h2 class="f-anton text-4xl md:text-5xl lg:text-6xl uppercase leading-tight mb-6">
+          FuelTech<br>
+          <span class="text-red">+ BR Sport</span>
+        </h2>
+        <p class="text-white/65 leading-relaxed mb-4" style="font-family:'Roboto',sans-serif;">
+          A parceria entre FuelTech e BR Sport levou o universo da performance para uma coleção de calçados desenvolvida em conjunto pelas duas marcas.
+        </p>
+        <p class="text-white/65 leading-relaxed mb-10" style="font-family:'Roboto',sans-serif;">
+          A coleção combina a identidade da BR Sport com elementos visuais associados à FuelTech e à cultura do automobilismo, criando produtos pensados para acompanhar quem se identifica com esse universo também fora das pistas.
+        </p>
+
+        <p class="f-anton text-2xl uppercase text-white mb-6">Conheça a coleção</p>
+
+        <a href="#formulario" class="btn-ghost px-8 py-4 text-sm ">Quero participar da roleta<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></a>
+      </div>
+
+      <!-- Imagens da coleção -->
+      <div class="relative">
+        <div class="absolute -inset-6 rounded-2xl" style="background:radial-gradient(ellipse at center, rgba(225,37,41,.12) 0%, transparent 70%);"></div>
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl mb-3" style="border:1px solid rgba(225,37,41,.18);">
+          <img src="assets/etapa3/IMG_5283.webp" alt="Tênis da coleção FuelTech + BR Sport" class="w-full object-cover" style="max-height:440px;">
+        </div>
+        <div class="relative grid grid-cols-2 gap-3">
+          <div class="rounded-2xl overflow-hidden shadow-xl" style="border:1px solid rgba(225,37,41,.18);">
+            <img src="assets/etapa3/IMG_5287.webp" alt="Detalhe do tênis FuelTech + BR Sport" class="w-full object-cover" style="max-height:240px;">
+          </div>
+          <div class="rounded-2xl overflow-hidden shadow-xl" style="border:1px solid rgba(225,37,41,.18);">
+            <img src="assets/etapa3/IMG_5288.webp" alt="Tênis da collab FuelTech + BR Sport de perfil" class="w-full object-cover" style="max-height:240px;">
+          </div>
+        </div>
+        <div class="absolute -bottom-5 -left-5 rounded-2xl px-5 py-4 shadow-xl" style="background:#E12529;">
+          <p class="f-anton text-[10px] tracking-widest text-white/75">EDIÇÃO</p>
+          <p class="f-anton text-2xl text-white leading-none">LIMITADA</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     07. A COPA FT BR SPORT DE ARRANCADA
+     ============================================================ -->
+<section id="copa" class="py-24 md:py-32 reveal" style="background:#0f0f0f;">
+  <div class="section-wrap px-6 md:px-14">
+
+    <!-- Header -->
+    <div class="text-center mb-14">
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Selo Copa FT BR Sport de Arrancada"
+           class="h-28 md:h-36 mx-auto mb-8 drop-shadow-2xl">
+      <p class="section-label mb-4">O Evento</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-6xl lg:text-7xl uppercase leading-tight max-w-5xl mx-auto">
+        Velocidade, competição e<br>
+        <span class="text-red">experiência no Velopark</span>
+      </h2>
+    </div>
+
+    <!-- Mosaic -->
+    <div class="mosaic mb-16">
+      <div class="m-main overflow-hidden">
+        <img src="assets/etapa3/DSC_9004.webp" alt="Carro de arrancada em burnout na Copa FT BR Sport">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/etapa3/DSC_9060.webp" alt="Moto de arrancada acelerando na pista">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/etapa3/DSC_9806.webp" alt="Moto de arrancada na largada">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/etapa3/DSC_9082.webp" alt="Roda traseira e fumaça na largada">
+      </div>
+      <div class="m-sub overflow-hidden">
+        <img src="assets/etapa3/DSC_8964.webp" alt="Burnout e fumaça na arrancada">
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-12">
+      <div>
+        <p class="text-white/65 leading-relaxed mb-4" style="font-family:'Roboto',sans-serif;">
+          A Copa FT BR Sport de Arrancada reúne pilotos e equipes em uma temporada de competições de arrancada realizada no Autódromo FuelTech Velopark, em Nova Santa Rita (RS).
+        </p>
+        <p class="text-white/65 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+          A programação combina as disputas na pista com experiências para o público, áreas de convivência e ativações das marcas envolvidas.
+        </p>
+      </div>
+      <div>
+        <div class="rounded-2xl p-8 text-center" style="background:#161616;border:1px solid rgba(225,37,41,.25);">
+          <p class="section-label mb-3">A 3º Etapa acontece</p>
+          <p class="f-anton text-3xl md:text-4xl uppercase text-white leading-tight mb-2">
+            31 de julho<br><span class="text-red">a 2 de agosto</span>
+          </p>
+          <p class="text-white/40 text-sm" style="font-family:'Roboto',sans-serif;">de 2026 · Autódromo FuelTech Velopark</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a href="#mapa" class="btn-red px-10 py-5 text-sm md:text-base ">Ver o mapa do evento<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     08. AUTÓDROMO FUELTECH VELOPARK — MAPA
+     ============================================================ -->
+<section id="mapa" class="py-24 md:py-32 reveal" style="background:#080808;">
+  <div class="section-wrap px-6 md:px-14">
+
+    <div class="text-center mb-14">
+      <p class="section-label mb-4">Autódromo FuelTech Velopark</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-5xl uppercase leading-tight max-w-3xl mx-auto mb-6">
+        Saiba onde encontrar <span class="text-red">cada experiência.</span>
+      </h2>
+      <p class="text-white/55 max-w-2xl mx-auto leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        O Autódromo FuelTech Velopark reúne diferentes áreas ao longo do evento. Para aproveitar melhor sua visita, consulte o mapa e localize os principais pontos da programação.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 md:gap-14 items-center max-w-5xl mx-auto">
+
+      <div>
+        <p class="f-anton text-xl uppercase text-white mb-6">Encontre no mapa</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Espaço BR Sport</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Loja FuelTech</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Pista</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Arquibancadas</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Praça de alimentação</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Acessos</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Estacionamento</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Banheiros</span></div>
+          <div class="flex items-center gap-3"><span style="width:6px;height:6px;border-radius:50%;background:#E12529;flex-shrink:0;"></span><span class="text-white/65 text-sm" style="font-family:'Roboto',sans-serif;">Demais áreas de interesse</span></div>
+        </div>
+        <div class="mt-8">
+          <button onclick="openMapa()" class="btn-red px-8 py-4 text-sm">Ver mapa do Velopark<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></button>
+        </div>
+      </div>
+
+      <div class="relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer" style="border:1px solid rgba(225,37,41,.18);" onclick="openMapa()">
+        <img src="assets/mapa-completo.webp" alt="Mapa do Autódromo FuelTech Velopark" class="w-full object-cover">
+        <div class="absolute inset-x-0 bottom-0 p-4" style="background:linear-gradient(to top, rgba(0,0,0,.85), transparent);">
+          <p class="text-white/70 text-xs text-center" style="font-family:'Roboto',sans-serif;">Toque para ampliar</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CREDIBILIDADE
+     ============================================================ -->
+<section id="credibilidade" class="py-20 md:py-24 reveal" style="background:#E12529;">
+  <div class="section-wrap px-6 md:px-14 text-center">
+    <h2 class="f-anton text-3xl md:text-5xl uppercase text-white mb-4">
+      Duas forças, uma collab histórica
+    </h2>
+    <p class="text-white/80 max-w-xl mx-auto mb-12 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+      Quando performance, design, conforto e cultura automotiva se encontram, o resultado não é apenas um produto. É um marco.
+    </p>
+    <div class="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16">
+      <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-10 md:h-14">
+      <div class="w-16 h-px md:w-px md:h-16 bg-white/30"></div>
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Copa FT BR Sport de Arrancada" class="h-24 md:h-32 drop-shadow-xl">
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     09. FAQ
+     ============================================================ -->
+<section id="faq" class="py-24 md:py-32 reveal" style="background:#0f0f0f;">
+  <div class="max-w-3xl mx-auto px-6 md:px-14">
+
+    <div class="text-center mb-14">
+      <p class="section-label mb-4">Dúvidas Frequentes</p>
+      <div class="accent-line mx-auto mb-6"></div>
+      <h2 class="f-anton text-4xl md:text-5xl uppercase leading-tight">
+        Dúvidas sobre <span class="text-red">a ativação?</span>
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Quem pode participar da roleta?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">A participação é destinada ao público presente no evento que realizar o cadastro, seguir a BR Sport no Instagram e apresentar o voucher à equipe da ativação.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Preciso comprar algum produto para participar?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Não. A participação na roleta está vinculada ao cadastro, ao seguimento da BR Sport e à apresentação do voucher, conforme as regras da ativação.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Posso girar a roleta mais de uma vez?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Não. Cada participante tem direito a uma tentativa.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Quais são os brindes?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Nesta etapa, a roleta terá três possibilidades de brinde: Kit Clog + Pins FT, copo BR Sport e caneta.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Preciso apresentar o voucher no celular?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Sim. O voucher deve ser apresentado à equipe da BR Sport no espaço de ativação.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Posso participar mesmo sem seguir a BR Sport?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">Para participar da ativação, é necessário seguir a BR Sport no Instagram e apresentar o perfil à equipe responsável.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Onde fica o espaço da BR Sport?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">O espaço de ativação está localizado no Autódromo FuelTech Velopark. Consulte o mapa da página para encontrar o local.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Os brindes são garantidos?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">A participação na roleta não garante um brinde específico. A distribuição está sujeita à disponibilidade dos brindes durante o evento.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden" style="background:#161616;">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-6 text-left" onclick="toggleFaq(this)">
+          <span class="font-bold text-white" style="font-family:'Roboto',sans-serif;">Onde posso conhecer a coleção FuelTech + BR Sport?</span>
+          <span class="faq-plus flex-shrink-0">+</span>
+        </button>
+        <div class="faq-body px-6">
+          <p class="text-white/55 text-sm pb-6 leading-relaxed" style="font-family:'Roboto',sans-serif;">A coleção está apresentada nesta página e poderá ser conhecida durante a experiência da Copa FT BR Sport de Arrancada.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer style="background:#080808;border-top:1px solid rgba(255,255,255,.06);">
+
+  <!-- CTA Final -->
+  <div class="relative overflow-hidden py-20 md:py-28">
+    <div class="absolute inset-0 opacity-[.06]">
+      <img src="assets/etapa3/DSC_9082.webp" alt="" class="w-full h-full object-cover">
+    </div>
+    <div class="absolute top-0 left-0 right-0 h-1" style="background:#E12529;"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
+         style="background:radial-gradient(circle, rgba(225,37,41,.12) 0%, transparent 70%);"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-6 md:px-14 text-center">
+      <p class="section-label mb-4">Última chance</p>
+      <h2 class="f-anton text-4xl md:text-6xl uppercase leading-tight mb-4">
+        Gire a roleta e garanta<br>
+        <span class="text-red">seu brinde exclusivo</span>
+      </h2>
+      <p class="text-white/50 mb-10 leading-relaxed" style="font-family:'Roboto',sans-serif;">
+        Sujeito à disponibilidade dos brindes. Não perca a chance de fazer parte da 3º etapa da Copa FT BR Sport de Arrancada.
+      </p>
+      <a href="#formulario" class="btn-red px-12 py-5 text-base md:text-lg ">
+        QUERO PARTICIPAR
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="max-w-7xl mx-auto px-6 md:px-14 py-10 flex flex-col md:flex-row items-center justify-between gap-6"
+       style="border-top:1px solid rgba(255,255,255,.06);">
+    <div class="flex flex-col md:flex-row items-center gap-6">
+      <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" class="h-8 md:h-10"
+           style="filter:drop-shadow(0 0 8px rgba(255,255,255,.1));">
+      <img src="assets/selo-lp-copaarrancada.webp" alt="Copa FT BR Sport de Arrancada" class="h-14 drop-shadow-xl">
+    </div>
+    <p class="text-white/25 text-xs text-center md:text-right leading-relaxed" style="font-family:'Roboto',sans-serif;">
+      © 2026 BR Sport + FuelTech. Todos os direitos reservados.<br>
+      Promoção sujeita a disponibilidade de estoque.<br>
+      Válido apenas no Autódromo FuelTech Velopark durante o evento.
+    </p>
+  </div>
+
+</footer>
+
+
+<!-- ============================================================
+     OVERLAYS
+     ============================================================ -->
+<!-- MANUTENÇÃO SCREEN (exibida quando SITE_ATIVO = false) -->
+<div id="manutencao-screen" style="display:none; position:fixed; inset:0; z-index:99999; background:#080808; flex-direction:column; align-items:center; justify-content:center; padding:32px; box-sizing:border-box; text-align:center;">
+  <div style="max-width:420px; width:100%;">
+    <div style="color:#E12529; margin-bottom:20px; display:flex; justify-content:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" style="height:40px; object-fit:contain; margin:0 auto 28px; display:block; opacity:.85;">
+    <h2 class="f-anton" style="font-size:clamp(1.4rem,5vw,1.9rem); color:#fff; text-transform:uppercase; line-height:1.3; margin-bottom:14px;">Voltamos em breve!</h2>
+    <p style="font-size:.95rem; color:rgba(255,255,255,.5); font-family:'Roboto',sans-serif; line-height:1.7;">No momento estamos ajustando<br>algumas coisinhas por aqui.<br><span style="color:rgba(255,255,255,.3);">Obrigado pela compreensão!</span></p>
+  </div>
+</div>
+
+<div id="retorno-screen" style="display:none; position:fixed; inset:0; z-index:9999; background:#080808; overflow-y:auto;"></div>
+
+<!-- VOUCHER SCREEN (exibida quando ROLETA_ATIVA = false) -->
+<div id="voucher-screen" style="display:none; position:fixed; inset:0; z-index:9999; background:#080808; overflow-y:auto; flex-direction:column; align-items:center; justify-content:center; padding:24px; box-sizing:border-box;">
+  <div style="max-width:480px; width:100%; text-align:center;">
+
+    <div style="color:#E12529; margin-bottom:14px; display:flex; justify-content:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+    </div>
+    <h2 class="f-anton" style="font-size:clamp(1.6rem,5vw,2.1rem); color:#fff; text-transform:uppercase; line-height:1.2; margin-bottom:18px;">Seu voucher<br>está pronto!</h2>
+
+    <div style="background:#161616; border-radius:12px; padding:14px 16px; margin-bottom:14px; border:1px solid rgba(225,37,41,.2); text-align:center;">
+      <p style="font-size:.6rem; letter-spacing:.28em; color:#4ade80; font-family:'Roboto',sans-serif; margin-bottom:5px; text-transform:uppercase;">Voucher da Roleta BR Sport</p>
+      <p id="vs-voucher" class="f-anton" style="font-size:1.5rem; color:#fff; letter-spacing:.1em;"></p>
+    </div>
+
+    <div style="background:#161616; border-radius:12px; padding:16px; margin-bottom:20px; border:1px solid rgba(255,255,255,.07); text-align:left;">
+      <p style="display:flex; align-items:center; gap:6px; font-size:.7rem; letter-spacing:.18em; color:#E12529; font-family:'Roboto',sans-serif; font-weight:700; text-transform:uppercase; margin-bottom:10px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        Antes de ir ao estande, confira
+      </p>
+      <p style="font-size:.88rem; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; line-height:1.9;">
+        ✓ Cadastro realizado<br>
+        ✓ BR Sport seguida no Instagram<br>
+        ✓ Voucher disponível no celular
+      </p>
+    </div>
+
+    <a href="https://www.instagram.com/brsport.oficial" target="_blank" rel="noopener noreferrer" class="btn-red" style="padding:15px 24px; display:flex; justify-content:center; text-decoration:none; width:100%; box-sizing:border-box; margin-bottom:10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      Seguir @brsport.oficial
+    </a>
+    <button onclick="openMapa()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:50px; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; font-size:.88rem; font-weight:500; cursor:pointer; letter-spacing:.04em; box-sizing:border-box;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Ver mapa do evento
+    </button>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     ROLETA SCREEN
+     ============================================================ -->
+<div id="roleta-screen" style="display:none;">
+
+  <!-- Header -->
+  <div style="text-align:center; width:100%; padding-top:max(env(safe-area-inset-top),16px); margin-bottom:12px;">
+    <img src="assets/logo-br-sport-fueltech.webp" alt="BR Sport + FuelTech" style="height:36px; filter:drop-shadow(0 0 8px rgba(255,255,255,.15));">
+  </div>
+
+  <!-- Title -->
+  <h2 class="f-anton" style="font-size:clamp(1.3rem,5vw,2rem); text-align:center; color:#fff; text-transform:uppercase; margin-bottom:4px; padding:0 16px;">
+    Gire a <span style="color:#E12529;">Roleta de Brindes</span>
+  </h2>
+  <p id="rl-hint" style="color:rgba(255,255,255,.4); font-size:.82rem; text-align:center; margin-bottom:14px; font-family:'Roboto',sans-serif; transition:opacity .4s;">
+    Toque no botão abaixo para girar
+  </p>
+
+  <!-- Wheel -->
+  <div id="rl-wheel-wrap" style="position:relative; width:100%; max-width:540px; padding:0 16px; box-sizing:border-box;">
+    <div style="position:absolute; top:-8px; left:50%; transform:translateX(-50%); z-index:2; color:#E12529; font-size:26px; line-height:1; text-shadow:0 2px 10px rgba(225,37,41,.7); pointer-events:none;">▼</div>
+    <canvas id="wheel-canvas" style="display:block; margin:0 auto; border-radius:50%; box-shadow:0 0 40px rgba(225,37,41,.18);"></canvas>
+    <button id="rl-spin-btn" onclick="spinWheel()"
+      style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;
+      width:72px;height:72px;border-radius:50%;background:#E12529;border:none;
+      color:#fff;font-family:'Anton',sans-serif;font-size:.78rem;letter-spacing:.08em;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;
+      box-shadow:0 0 0 5px #080808,0 0 0 8px #E12529,0 4px 24px rgba(225,37,41,.55);
+      transition:opacity .25s;">
+      GIRAR
+    </button>
+  </div>
+
+  <!-- Prizes chips -->
+  <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:7px; justify-content:center; padding:0 16px; max-width:460px;">
+    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Kit Clog + Pins FT</span>
+    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Copo BR Sport</span>
+    <span style="background:rgba(225,37,41,.1); border:1px solid rgba(225,37,41,.18); border-radius:20px; padding:4px 13px; font-size:.7rem; color:rgba(255,255,255,.45); font-family:'Roboto',sans-serif; letter-spacing:.04em;">Caneta BR Sport</span>
+  </div>
+
+  <!-- WIN MODAL -->
+  <div id="rl-win-modal" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,.92); padding:24px; box-sizing:border-box; align-items:center; justify-content:center;">
+    <div style="max-width:480px; width:100%; background:#161616; border-radius:24px; padding:36px 24px 28px; text-align:center; border:1px solid rgba(225,37,41,.3); overflow-y:auto; max-height:calc(100vh - 48px);">
+      <div style="color:#E12529; margin-bottom:14px; display:flex; justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+      </div>
+      <h2 class="f-anton" style="font-size:clamp(1.6rem,5vw,2.1rem); color:#fff; text-transform:uppercase; line-height:1.2; margin-bottom:10px;">Parabéns!<br>Você ganhou!</h2>
+      <div style="background:#E12529; border-radius:14px; padding:18px; margin:16px 0 10px;">
+        <p style="font-size:.62rem; letter-spacing:.28em; color:#4ade80; font-family:'Roboto',sans-serif; margin-bottom:6px; text-transform:uppercase;">Seu Brinde</p>
+        <p id="rl-win-prize" class="f-anton" style="font-size:clamp(1.3rem,4vw,1.7rem); color:#fff; text-transform:uppercase; line-height:1.2;"></p>
+        <p id="rl-win-size" style="font-size:.78rem; color:rgba(255,255,255,.85); font-family:'Roboto',sans-serif; margin-top:8px; display:none;"></p>
+      </div>
+      <div style="background:#0f0507; border-radius:12px; padding:13px 16px; margin-bottom:16px; border:1px solid rgba(225,37,41,.25);">
+        <p style="font-size:.6rem; letter-spacing:.28em; color:#4ade80; font-family:'Roboto',sans-serif; margin-bottom:5px; text-transform:uppercase;">Seu Voucher</p>
+        <p id="rl-win-voucher" class="f-anton" style="font-size:1.5rem; color:#fff; letter-spacing:.1em;"></p>
+      </div>
+      <p style="color:rgba(255,255,255,.55); font-size:.85rem; font-family:'Roboto',sans-serif; margin-bottom:20px; line-height:1.65;">
+        Apresente o voucher acima no espaço BR Sport no Velopark para retirar seu brinde.
+      </p>
+      <a href="https://www.instagram.com/brsport.oficial" target="_blank" rel="noopener noreferrer" class="btn-red" style="display:flex; width:100%; padding:15px 20px; font-size:.88rem; text-decoration:none; justify-content:center; margin-bottom:10px; box-sizing:border-box;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Seguir @brsport.oficial
+      </a>
+      <button onclick="openMapa()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 20px; margin-bottom:10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:50px; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; font-size:.88rem; font-weight:500; cursor:pointer; letter-spacing:.04em; box-sizing:border-box;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ver mapa do evento
+      </button>
+      <p style="font-size:.68rem; color:rgba(255,255,255,.2); font-family:'Roboto',sans-serif;">Sujeito à disponibilidade de estoque durante o evento.</p>
+    </div>
+  </div>
+
+  <!-- ESGOTADO MODAL (todos os brindes acabaram) -->
+  <div id="rl-loss-modal" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,.92); padding:24px; box-sizing:border-box; align-items:center; justify-content:center;">
+    <div style="max-width:480px; width:100%; background:#161616; border-radius:24px; padding:36px 24px 28px; text-align:center; border:1px solid rgba(255,255,255,.07); overflow-y:auto; max-height:calc(100vh - 48px);">
+      <div style="color:rgba(255,255,255,.25); margin-bottom:14px; display:flex; justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <h2 class="f-anton" style="font-size:clamp(1.6rem,5vw,2.1rem); color:#fff; text-transform:uppercase; line-height:1.2; margin-bottom:10px;">Brindes<br>esgotados</h2>
+      <div style="background:#0f0f0f; border-radius:12px; padding:13px 16px; margin-bottom:14px; border:1px solid rgba(255,255,255,.08);">
+        <p style="font-size:.6rem; letter-spacing:.28em; color:#4ade80; font-family:'Roboto',sans-serif; margin-bottom:5px; text-transform:uppercase;">Seu Voucher</p>
+        <p id="rl-loss-voucher" class="f-anton" style="font-size:1.5rem; color:#fff; letter-spacing:.1em;"></p>
+      </div>
+      <p style="color:rgba(255,255,255,.55); font-size:.85rem; font-family:'Roboto',sans-serif; margin-bottom:20px; line-height:1.65;">
+        Os brindes desta ativação acabaram por enquanto.<br>
+        Passe no <strong style="color:#fff;">espaço BR Sport</strong> para conhecer a coleção e falar com a equipe.
+      </p>
+      <a href="https://www.instagram.com/brsport.oficial" target="_blank" rel="noopener noreferrer" class="btn-red" style="display:flex; width:100%; padding:15px 20px; font-size:.88rem; text-decoration:none; justify-content:center; margin-bottom:10px; box-sizing:border-box;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Seguir @brsport.oficial
+      </a>
+      <button onclick="openMapa()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:50px; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; font-size:.88rem; font-weight:500; cursor:pointer; letter-spacing:.04em; box-sizing:border-box;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ver mapa do evento
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- MAPA LIGHTBOX -->
+<div id="mapa-lightbox" onclick="closeMapa()" style="display:none; position:fixed; inset:0; z-index:20000; background:rgba(0,0,0,.96); align-items:center; justify-content:center; padding:16px; box-sizing:border-box;">
+  <button onclick="closeMapa()" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); border-radius:50%; width:40px; height:40px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; z-index:1;">✕</button>
+  <img src="assets/mapa-completo.webp" alt="Mapa do evento" onclick="event.stopPropagation()" style="max-width:100%; max-height:calc(100vh - 32px); object-fit:contain; border-radius:8px;">
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+  /* ================================================================
+     ╔══════════════════════════════════════════════════════════════╗
+     ║  PAINEL DE CONTROLE DA ATIVAÇÃO — 3º ETAPA                   ║
+     ║  Tudo que muda no dia do evento está NESTE bloco.            ║
+     ╚══════════════════════════════════════════════════════════════╝
+     ================================================================ */
+
+  /* Liga/desliga o site inteiro (false = tela de manutenção) */
+  const SITE_ATIVO = true;
+
+  /* Liga/desliga a roleta (false = só gera voucher, roleta presencial) */
+  const ROLETA_ATIVA = true;
+
+  /* URL do Web App do Google Apps Script da planilha da 3º ETAPA.
+     Código-fonte do script versionado em apps-script-3a-etapa.gs (raiz do repo). */
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwvJX8xDGaaCMttkgiuQ966cgYmRQDPdOzZGQXA6rRu9HwZwFuTFDiEPQpTqrwLe3Am/exec';
+
+  /* ---------------------------------------------------------------
+     ESTOQUE TOTAL POR BRINDE (conta o que já saiu na planilha)
+     Quando a contagem atinge o limite, o peso do brinde vai a ZERO
+     (a fatia continua na roda, mas não é mais sorteada).
+     --------------------------------------------------------------- */
+  const PRIZE_LIMITS = {
+    // ⚠️ 02/08 15:10 — a equipe no estande informou que os clogs ACABARAM
+    // fisicamente. Limite em 0 tira o Kit Clog da roleta na hora: como já
+    // saíram 139, a checagem "entregues >= limite" zera o peso dele.
+    // A fatia continua visível na roda (esmaecida) e Copo/Caneta viram 50/50.
+    // PARA RELIGAR: devolver o valor 158 aqui. Era: 'Kit Clog + Pins FT': 158
+    'Kit Clog + Pins FT':  0,
+    'Copo BR Sport':       950,   // "temos 950 copos no Velopark"
+    'Caneta BR Sport':     999,   // ⚠️ quantidade não informada — confirmar com a BR Sport
+  };
+
+  /* ---------------------------------------------------------------
+     GRADE DO KIT CLOG POR GÊNERO E TAMANHO
+     F = Moleca (feminino) · M = Actvitta (masculino)
+     Fonte: planilha "CLOGS VELOPARK.xlsx", já descontados os 12 pares
+     retirados (1×33, 2×34, 3×35, 3×36, 2×37, 1×38 da grade Moleca).
+     As linhas 25 e 29 da planilha estavam com a marca invertida —
+     corrigido conforme a BR Sport: a grade 37–43 é Actvitta (masculina)
+     e a 33–40 é Moleca (feminina).
+     Se o par do gênero/tamanho da pessoa acabar, o Kit Clog fica com
+     peso 0 só para ela — os outros brindes seguem normais.
+     --------------------------------------------------------------- */
+  const CLOG_STOCK = {
+    // 01/08 21:29 — retirados 2×37 e 2×39 da Moleca, entregues na mão ao pessoal da FT
+    F: { 33: 2, 34: 8, 35: 17, 36: 27, 37: 28, 38: 23, 39:  9, 40: 4 }, // 118 — Moleca
+    M: { 37: 2, 38: 4, 39:  5, 40:  6, 41:  5, 42:  2, 43: 1 },         //  25 — Actvitta
+  };
+
+  /* Nome exato do brinde que consome a grade acima */
+  const CLOG_PRIZE = 'Kit Clog + Pins FT';
+
+  /* ---------------------------------------------------------------
+     FLUSH — janela em que o Kit Clog fica dominante para escoar estoque
+     Definido pela BR Sport (Arlise): 02/08, das 14h às 17h, Clog a 70%.
+     Fora da janela os pesos voltam sozinhos ao normal (10/45/45).
+
+     Os instantes são UTC ABSOLUTO de propósito: assim a janela vale às
+     14h de Brasília independentemente do fuso do celular do participante.
+       14h BRT = 17:00 UTC   ·   17h BRT = 20:00 UTC
+     Para DESLIGAR antes da hora, é só pôr FLUSH_ATIVO = false.
+     --------------------------------------------------------------- */
+  const FLUSH_ATIVO  = true;
+  const FLUSH_INICIO = Date.parse('2026-08-02T17:00:00Z');
+  const FLUSH_FIM    = Date.parse('2026-08-02T20:00:00Z');
+
+  /* Peso POR FATIA durante o flush (cada brinde ocupa 2 fatias).
+     35+7.5+7.5 = 50 por metade → 70% Clog · 15% Copo · 15% Caneta */
+  const FLUSH_WEIGHTS = {
+    'Kit Clog + Pins FT': 35,
+    'Copo BR Sport':       7.5,
+    'Caneta BR Sport':     7.5,
+  };
+
+  function flushLigado() {
+    if (!FLUSH_ATIVO) return false;
+    const agora = Date.now();
+    return agora >= FLUSH_INICIO && agora < FLUSH_FIM;
+  }
+
+  /* ================================================================
+     FIM DO PAINEL DE CONTROLE
+     ================================================================ */
+
+  if (!SITE_ATIVO && !localStorage.getItem('ftbrs3_completed')) {
+    document.getElementById('manutencao-screen').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  /* ---- MAPA ---- */
+  function openMapa() {
+    const lb = document.getElementById('mapa-lightbox');
+    lb.style.display = 'flex';
+  }
+  function closeMapa() {
+    document.getElementById('mapa-lightbox').style.display = 'none';
+  }
+
+  /* ---- SLIDER ---- */
+  let cur = 0;
+  const TOTAL = 3;
+  let timer;
+
+  function goSlide(n) {
+    document.getElementById('bg' + cur).classList.remove('active');
+    document.getElementById('txt' + cur).classList.remove('active');
+    document.querySelectorAll('.dot')[cur].classList.remove('active');
+
+    cur = n;
+
+    document.getElementById('bg' + cur).classList.add('active');
+    document.getElementById('txt' + cur).classList.add('active');
+    document.querySelectorAll('.dot')[cur].classList.add('active');
+  }
+
+  function nextSlide() { goSlide((cur + 1) % TOTAL); }
+
+  function startTimer() { timer = setInterval(nextSlide, 5000); }
+  function resetTimer() { clearInterval(timer); startTimer(); }
+
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.addEventListener('click', () => { goSlide(i); resetTimer(); });
+  });
+
+  startTimer();
+
+  /* ---- FAQ ---- */
+  function toggleFaq(btn) {
+    const body = btn.nextElementSibling;
+    const plus = btn.querySelector('.faq-plus');
+    const isOpen = body.classList.contains('open');
+
+    document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.faq-plus').forEach(p => p.classList.remove('open'));
+
+    if (!isOpen) { body.classList.add('open'); plus.classList.add('open'); }
+  }
+
+  /* ---- FORM: máscara de telefone ---- */
+  function phoneMask(el) {
+    let v = el.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length >= 11) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    else if (v.length >= 7) v = v.replace(/(\d{2})(\d{4,5})(\d*)/, (m, a, b, c) => c ? `(${a}) ${b}-${c}` : `(${a}) ${b}`);
+    else if (v.length >= 3) v = v.replace(/(\d{2})(\d*)/, '($1) $2');
+    el.value = v;
+  }
+
+  /* ---- FORM: tamanhos disponíveis conforme o gênero ---- */
+  function updateTamanhos() {
+    const genero = document.getElementById('f-genero').value;
+    const sel    = document.getElementById('f-tamanho');
+    sel.innerHTML = '';
+
+    if (!genero || !CLOG_STOCK[genero]) {
+      sel.disabled = true;
+      sel.innerHTML = '<option value="" disabled selected>Gênero primeiro</option>';
+      return;
+    }
+
+    sel.disabled = false;
+    const ph = document.createElement('option');
+    ph.value = ''; ph.disabled = true; ph.selected = true;
+    ph.textContent = 'Selecione';
+    sel.appendChild(ph);
+
+    Object.keys(CLOG_STOCK[genero])
+      .map(Number)
+      .sort((a, b) => a - b)
+      .forEach(t => {
+        const o = document.createElement('option');
+        o.value = String(t);
+        o.textContent = String(t);
+        sel.appendChild(o);
+      });
+  }
+
+  /* ---- FORM: validação ---- */
+  function validarCadastro(d) {
+    if (!d.nome || d.nome.trim().length < 3)              return 'Informe seu nome completo.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email))   return 'Informe um e-mail válido.';
+    if (d.phone.replace(/\D/g, '').length < 10)           return 'Informe um telefone válido com DDD.';
+    if (!d.cidade || d.cidade.trim().length < 2)          return 'Informe sua cidade.';
+    if (!d.estado)                                        return 'Selecione seu estado.';
+    if (!d.genero)                                        return 'Selecione o gênero do calçado.';
+    if (!d.tamanho)                                       return 'Selecione seu tamanho.';
+    return null;
+  }
+
+  function showFormError(msg) {
+    const btn = document.getElementById('submit-btn');
+    let err = document.getElementById('form-dup-error');
+    if (!err) {
+      err = document.createElement('p');
+      err.id = 'form-dup-error';
+      err.style.cssText = 'color:#E12529;font-size:.85rem;text-align:center;margin-top:12px;font-family:Roboto,sans-serif;font-weight:600;';
+      btn.after(err);
+    }
+    err.textContent = msg;
+  }
+
+  function clearFormError() {
+    const err = document.getElementById('form-dup-error');
+    if (err) err.textContent = '';
+  }
+
+  /* ---- FORM SUBMIT ---- */
+  let _vd = {};
+
+  function generateVoucher() {
+    const ts   = String(Date.now()).slice(-3);
+    const rand = String(Math.floor(100 + Math.random() * 900));
+    return 'FTBRS3' + ts + rand;
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+
+    const dados = {
+      nome:    document.getElementById('f-nome').value.trim(),
+      email:   document.getElementById('f-email').value.trim(),
+      phone:   document.getElementById('f-phone').value.trim(),
+      cidade:  document.getElementById('f-cidade').value.trim(),
+      estado:  document.getElementById('f-estado').value.trim(),
+      genero:  document.getElementById('f-genero').value.trim(),
+      tamanho: document.getElementById('f-tamanho').value.trim(),
+    };
+
+    const erro = validarCadastro(dados);
+    if (erro) { showFormError(erro); return; }
+
+    clearFormError();
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+
+    const checkParams = new URLSearchParams({ action: 'check', email: dados.email, telefone: dados.phone });
+    fetch(SHEETS_URL + '?' + checkParams.toString(), { redirect: 'follow' })
+      .then(r => r.json())
+      .then(res => {
+        if (res.exists) {
+          btn.disabled = false;
+          btn.textContent = 'ENVIAR CADASTRO';
+          showFormError('Este e-mail ou telefone já está cadastrado.');
+          return;
+        }
+        continuar();
+      })
+      .catch(() => continuar());
+
+    function continuar() {
+      const now      = new Date();
+      const datetime = now.toLocaleString('pt-BR', { dateStyle:'short', timeStyle:'short' });
+      const voucher  = generateVoucher();
+
+      _vd = { ...dados, datetime, voucher };
+      localStorage.setItem('ftbrs3_voucher', voucher);
+      localStorage.setItem('ftbrs3_genero',  dados.genero);
+      localStorage.setItem('ftbrs3_tamanho', dados.tamanho);
+      document.getElementById('form-wrap').style.display = 'none';
+
+      // Grava o lead JÁ NO CADASTRO (sem prêmio ainda). Se a pessoa fechar a
+      // aba antes de girar, o lead não se perde.
+      const params = new URLSearchParams({
+        datetime, nome: dados.nome, email: dados.email, telefone: dados.phone,
+        cidade: dados.cidade, estado: dados.estado,
+        genero: dados.genero, tamanho: dados.tamanho,
+        voucher, premio: ''
+      });
+      fetch(SHEETS_URL + '?' + params.toString(), { redirect: 'follow' }).catch(() => {});
+
+      if (ROLETA_ATIVA) {
+        startRoleta();
+      } else {
+        localStorage.setItem('ftbrs3_completed', '1');
+        localStorage.setItem('ftbrs3_premio', '');
+        document.getElementById('vs-voucher').textContent = voucher;
+        document.getElementById('voucher-screen').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+  }
+
+  /* ================================================================
+     ROLETA
+     ================================================================ */
+  (function() {
+
+    /* 6 fatias — cada brinde aparece 2× para a roda parecer mais cheia.
+       Pesos definidos pela BR Sport (soma = 100):
+         Kit Clog + Pins FT ..  5 + 5 = 10%
+         Copo BR Sport ....... 23 + 22 = 45%
+         Caneta BR Sport ..... 23 + 22 = 45%
+       Não existe fatia de "não ganhou": todo giro válido premia. */
+    const BASE_PRIZES = [
+      { title: 'Kit Clog\n+ Pins FT', prize: 'Kit Clog + Pins FT', type: 'win', weight:  5 },
+      { title: 'Copo\nBR Sport',      prize: 'Copo BR Sport',      type: 'win', weight: 23 },
+      { title: 'Caneta\nBR Sport',    prize: 'Caneta BR Sport',    type: 'win', weight: 23 },
+      { title: 'Kit Clog\n+ Pins FT', prize: 'Kit Clog + Pins FT', type: 'win', weight:  5 },
+      { title: 'Copo\nBR Sport',      prize: 'Copo BR Sport',      type: 'win', weight: 22 },
+      { title: 'Caneta\nBR Sport',    prize: 'Caneta BR Sport',    type: 'win', weight: 22 },
+    ];
+
+    const TAU  = Math.PI * 2;
+    // As 6 fatias NUNCA são removidas: o controle de estoque zera o PESO.
+    // Assim a roda mantém sempre o mesmo desenho e a pessoa continua vendo
+    // o Kit Clog, mesmo que o tamanho dela já tenha acabado.
+    let PRIZES = BASE_PRIZES.map(p => ({ ...p }));
+    const SLICE = TAU / BASE_PRIZES.length;
+
+    /* Estoque restante do Kit Clog para o gênero/tamanho escolhido no cadastro */
+    function clogRestante(counts) {
+      const g = _vd.genero, t = _vd.tamanho;
+      if (!g || !t) return 0;
+      const grade = CLOG_STOCK[g];
+      if (!grade) return 0;
+      const total = grade[t] || grade[Number(t)] || 0;
+      const jaSaiu = (counts.clogs && counts.clogs[g + '-' + t]) || 0;
+      return total - jaSaiu;
+    }
+
+    /* Recalcula os pesos a partir do que já saiu (planilha) */
+    function rebuildPrizes(counts) {
+      counts = counts || {};
+      const premios = counts.premios || {};
+      const clogOk  = clogRestante(counts) > 0;
+
+      const emFlush = flushLigado();
+
+      PRIZES = BASE_PRIZES.map(p => {
+        // 1) Peso base — ou o do flush, se estivermos na janela
+        let w = (emFlush && FLUSH_WEIGHTS[p.prize] !== undefined)
+                ? FLUSH_WEIGHTS[p.prize]
+                : p.weight;
+
+        // 2) Estoque zera o peso, e isso vale SEMPRE — inclusive no flush.
+        //    Limite global do brinde
+        const limite = PRIZE_LIMITS[p.prize];
+        if (limite !== undefined && (premios[p.prize] || 0) >= limite) w = 0;
+
+        //    Limite da grade (só o Kit Clog)
+        if (p.prize === CLOG_PRIZE && !clogOk) w = 0;
+
+        return { ...p, weight: w };
+      });
+    }
+
+    function totalWeight() { return PRIZES.reduce((s, p) => s + p.weight, 0); }
+
+    const PALETTE   = ['#1a0607','#3a1010','#E12529','#b81e21','#0f0507'];
+    const SEG_OUTER = ['#4a1010','#1a0407'];
+
+    let canvas, ctx, size, center, radius;
+    let rotation = 0, spinning = false, spinDone = false;
+    let animId, lastTickIdx = -1, audioCtx;
+
+    function getAudio() {
+      if (!audioCtx) {
+        try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(_) {}
+      }
+      return audioCtx;
+    }
+
+    function playTick() {
+      const ac = getAudio(); if (!ac) return;
+      try {
+        const osc = ac.createOscillator(), g = ac.createGain();
+        osc.connect(g); g.connect(ac.destination);
+        osc.type = 'triangle'; osc.frequency.value = 920;
+        g.gain.setValueAtTime(.0001, ac.currentTime);
+        g.gain.exponentialRampToValueAtTime(.07, ac.currentTime + .01);
+        g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + .055);
+        osc.start(); osc.stop(ac.currentTime + .06);
+      } catch(_) {}
+    }
+
+    function playWin() {
+      const ac = getAudio(); if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+          const osc = ac.createOscillator(), g = ac.createGain();
+          const s = now + i * .1;
+          osc.type = 'sine'; osc.frequency.value = f;
+          g.gain.setValueAtTime(.0001, s);
+          g.gain.exponentialRampToValueAtTime(.12, s + .03);
+          g.gain.exponentialRampToValueAtTime(.0001, s + .32);
+          osc.connect(g); g.connect(ac.destination);
+          osc.start(s); osc.stop(s + .35);
+        });
+      } catch(_) {}
+    }
+
+    function randomUint32() {
+      const arr = new Uint32Array(1);
+      (window.crypto || window.msCrypto).getRandomValues(arr);
+      return arr[0];
+    }
+    function randomInt(max) {
+      const range = 0x100000000, limit = range - range % max;
+      let v; do { v = randomUint32(); } while (v >= limit);
+      return v % max;
+    }
+    function randomFloat() { return randomUint32() / 0x100000000; }
+
+    /* Sorteio ponderado. Fatias com peso 0 NUNCA são escolhidas.
+       Retorna -1 se não há nenhum brinde disponível. */
+    function weightedPick() {
+      const total = totalWeight();
+      if (total <= 0) return -1;
+      let r = randomFloat() * total;
+      for (let i = 0; i < PRIZES.length; i++) {
+        if (PRIZES[i].weight <= 0) continue;
+        r -= PRIZES[i].weight;
+        if (r <= 0) return i;
+      }
+      // fallback: última fatia com peso > 0
+      for (let i = PRIZES.length - 1; i >= 0; i--) if (PRIZES[i].weight > 0) return i;
+      return -1;
+    }
+
+    function normalizeAngle(a) { return ((a % TAU) + TAU) % TAU; }
+    function selectedIndex()   { return Math.floor(normalizeAngle(-rotation) / SLICE) % PRIZES.length; }
+
+    function segColor(i) {
+      return { a: PALETTE[(i + 1) % PALETTE.length], b: PALETTE[i % PALETTE.length], c: SEG_OUTER[i % 2] };
+    }
+
+    function drawWheel() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, size, size);
+      ctx.save();
+      ctx.translate(center, center);
+      ctx.rotate(rotation);
+
+      PRIZES.forEach((p, i) => {
+        const start = i * SLICE - Math.PI / 2, end = start + SLICE;
+        const sc = segColor(i);
+        const g = ctx.createRadialGradient(0, 0, 55, 0, 0, radius);
+        g.addColorStop(0,   sc.a);
+        g.addColorStop(.55, sc.b);
+        g.addColorStop(1,   sc.c);
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, radius, start, end); ctx.closePath();
+        ctx.fillStyle = g; ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,.5)'; ctx.lineWidth = 2; ctx.stroke();
+
+        ctx.save();
+        ctx.rotate(start + SLICE / 2);
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        const fSize = size < 420 ? 11 : 13;
+        ctx.font = `500 ${fSize}px Roboto,Arial,sans-serif`;
+        // Brinde sem estoque para esta pessoa fica esmaecido, mas continua visível
+        ctx.fillStyle = p.weight > 0 ? '#fff' : 'rgba(255,255,255,.35)';
+        const lines = p.title.split('\n'), lh = fSize + 5;
+        const y0 = -((lines.length - 1) * lh) / 2;
+        lines.forEach((ln, li) => ctx.fillText(ln.toUpperCase(), radius - 22, y0 + li * lh));
+        ctx.restore();
+      });
+
+      ctx.beginPath(); ctx.arc(0, 0, radius, 0, TAU);
+      ctx.strokeStyle = '#E12529'; ctx.lineWidth = 10; ctx.stroke();
+
+      ctx.beginPath(); ctx.arc(0, 0, 40, 0, TAU);
+      ctx.fillStyle = '#080808'; ctx.fill();
+
+      ctx.restore();
+    }
+
+    function doSpin() {
+      if (spinning || spinDone) return;
+
+      const ti = weightedPick();
+      if (ti < 0) { showEsgotadoModal(); return; }   // nada disponível
+
+      spinning = true;
+      const btn = document.getElementById('rl-spin-btn');
+      btn.disabled = true;
+      document.getElementById('rl-hint').style.opacity = '0';
+
+      // Offset dentro da fatia: ±0.34 · SLICE → o ponteiro para sempre
+      // entre 16% e 84% da fatia sorteada, nunca na borda.
+      const offset = (randomFloat() * .68 - .34) * SLICE;
+      const tc     = ti * SLICE + SLICE / 2 + offset;
+      const des    = normalizeAngle(-tc);
+      const cur    = normalizeAngle(rotation);
+      const delta  = normalizeAngle(des - cur);
+      // ⚠️ O número de voltas extras PRECISA ser inteiro. Com valor fracionário
+      // (bug da 2ª etapa) a roda parava numa posição aleatória e o sorteio
+      // ponderado era ignorado — a distribuição virava uniforme entre as fatias.
+      const extra  = 4 + randomInt(7);            // 4 a 10 voltas completas
+      const total  = delta + TAU * extra;
+      const dur    = 4600 + randomFloat() * 2600;
+      const ease   = 3.6 + randomFloat() * 1.4;
+      const r0     = rotation;
+      let t0 = null;
+      lastTickIdx  = -1;
+
+      function frame(ts) {
+        if (!t0) t0 = ts;
+        const elapsed = ts - t0;
+        const t = Math.min(elapsed / dur, 1);
+        rotation = r0 + total * (1 - Math.pow(1 - t, ease));
+        drawWheel();
+        const ci = selectedIndex();
+        if (ci !== lastTickIdx && elapsed > 80) { playTick(); lastTickIdx = ci; }
+        if (t < 1) {
+          animId = requestAnimationFrame(frame);
+        } else {
+          rotation = r0 + total;
+          drawWheel();
+          spinning = false;
+          // selectedIndex() é a fatia que o ponteiro mostra — é ela que vale,
+          // para o resultado bater sempre com o que a pessoa vê na tela.
+          onPrizeLanded(selectedIndex());
+        }
+      }
+      animId = requestAnimationFrame(frame);
+    }
+
+    function onPrizeLanded(idx) {
+      const p = PRIZES[idx];
+      spinDone = true;
+
+      localStorage.setItem('ftbrs3_completed', '1');
+      localStorage.setItem('ftbrs3_premio', p.prize);
+
+      registrarPremio(p.prize);
+      playWin();
+      startConfetti();
+      setTimeout(() => showWinModal(p), 900);
+    }
+
+    /* Atualiza a linha do voucher na planilha com o prêmio sorteado */
+    function registrarPremio(premio) {
+      const params = new URLSearchParams({
+        action:  'setprize',
+        voucher: _vd.voucher || '',
+        premio:  premio,
+        genero:  _vd.genero  || '',
+        tamanho: _vd.tamanho || ''
+      });
+      fetch(SHEETS_URL + '?' + params.toString(), { redirect: 'follow' })
+        .catch(e => console.warn('Sheets:', e));
+    }
+
+    function showWinModal(p) {
+      document.getElementById('rl-win-prize').textContent = p.prize;
+      document.getElementById('rl-win-voucher').textContent = _vd.voucher || '';
+      const sz = document.getElementById('rl-win-size');
+      if (p.prize === CLOG_PRIZE && _vd.tamanho) {
+        sz.textContent = (_vd.genero === 'F' ? 'Feminino' : 'Masculino') + ' · Tamanho ' + _vd.tamanho;
+        sz.style.display = 'block';
+      } else {
+        sz.style.display = 'none';
+      }
+      document.getElementById('rl-win-modal').style.display = 'flex';
+    }
+
+    function showEsgotadoModal() {
+      spinDone = true;
+      localStorage.setItem('ftbrs3_completed', '1');
+      localStorage.setItem('ftbrs3_premio', 'Esgotado');
+      registrarPremio('Esgotado');
+      document.getElementById('rl-loss-voucher').textContent = _vd.voucher || '';
+      document.getElementById('rl-loss-modal').style.display = 'flex';
+    }
+
+    /* --- Confetti --- */
+    const CONF_COLORS = ['#E12529','#fff','#b81e21','#ffcc00','#ff6b6b','#ffe0e0'];
+    let confCanvas, confCtx, confParts = [], confId;
+
+    function startConfetti() {
+      if (!confCanvas) {
+        confCanvas = document.createElement('canvas');
+        confCanvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:10001;';
+        document.body.appendChild(confCanvas);
+        confCtx = confCanvas.getContext('2d');
+      }
+      confCanvas.width = innerWidth; confCanvas.height = innerHeight;
+      confParts = [];
+      for (let i = 0; i < 160; i++) {
+        confParts.push({
+          x: Math.random() * innerWidth, y: -10 - Math.random() * 80,
+          w: 6 + Math.random() * 10,    h: 5 + Math.random() * 6,
+          color: CONF_COLORS[0 | Math.random() * CONF_COLORS.length],
+          vx: (Math.random() - .5) * 4, vy: 1.5 + Math.random() * 3.5,
+          rot: Math.random() * TAU, vrot: (Math.random() - .5) * .22,
+          life: 1, drag: .991 + Math.random() * .006
+        });
+      }
+      animConf();
+      setTimeout(stopConfetti, 5500);
+    }
+
+    function animConf() {
+      confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+      let alive = false;
+      confParts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        p.vy += .22; p.vx *= p.drag; p.vy *= p.drag;
+        p.rot += p.vrot; p.life -= .007;
+        if (p.y < confCanvas.height + 20) alive = true;
+        confCtx.save();
+        confCtx.translate(p.x, p.y); confCtx.rotate(p.rot);
+        confCtx.globalAlpha = Math.max(0, p.life);
+        confCtx.fillStyle = p.color;
+        confCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        confCtx.restore();
+      });
+      if (alive) confId = requestAnimationFrame(animConf);
+    }
+
+    function stopConfetti() {
+      if (confId) { cancelAnimationFrame(confId); confId = null; }
+      if (confCtx) confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+    }
+
+    /* --- Canvas init --- */
+    function initCanvas() {
+      canvas = document.getElementById('wheel-canvas');
+      if (!canvas) return;
+      const wrap = document.getElementById('rl-wheel-wrap');
+      const wMax = Math.min(wrap.clientWidth - 16, 510);
+      const dpr = window.devicePixelRatio || 1;
+      size = wMax; center = size / 2; radius = center - 12;
+      canvas.width  = Math.round(size * dpr);
+      canvas.height = Math.round(size * dpr);
+      canvas.style.width  = size + 'px';
+      canvas.style.height = size + 'px';
+      ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      drawWheel();
+    }
+
+    /* Lê o estoque da planilha com prazo máximo. O parâmetro _ evita
+       qualquer cache intermediário no caminho. */
+    function lerEstoque(timeoutMs) {
+      const url = SHEETS_URL + '?action=counts&_=' + Date.now();
+      if (typeof AbortController === 'undefined') {
+        return fetch(url, { redirect: 'follow' }).then(r => r.json());
+      }
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+      return fetch(url, { redirect: 'follow', signal: ctrl.signal })
+        .then(r => r.json())
+        .finally(() => clearTimeout(timer));
+    }
+
+    /* --- API pública --- */
+    window.startRoleta = () => {
+      document.getElementById('roleta-screen').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      lerEstoque(8000)
+        .then(counts => rebuildPrizes(counts))
+        .catch(() => rebuildPrizes({}))
+        .finally(() => {
+          setTimeout(initCanvas, 80);
+          if (totalWeight() <= 0) {
+            const btn = document.getElementById('rl-spin-btn');
+            if (btn) btn.disabled = true;
+            const hint = document.getElementById('rl-hint');
+            if (hint) hint.textContent = 'Brindes esgotados no momento.';
+          }
+        });
+    };
+
+    /* Reconsulta o estoque IMEDIATAMENTE antes de girar.
+       Entre abrir a roleta e apertar GIRAR pode passar muito tempo (a
+       pessoa se cadastra, caminha até o estande, só então gira), e nesse
+       intervalo outros já podem ter levado o último par do tamanho dela.
+       Se a consulta falhar ou estourar o prazo, o giro acontece do mesmo
+       jeito com os pesos da abertura — nunca trava o participante. */
+    let conferindo = false;
+
+    window.spinWheel = () => {
+      getAudio();
+      if (spinning || spinDone || conferindo) return;
+
+      conferindo = true;
+      const btn  = document.getElementById('rl-spin-btn');
+      const hint = document.getElementById('rl-hint');
+      const AVISO = 'Conferindo estoque...';
+      // Nunca "restaurar" o próprio aviso transitório — senão ele fica preso na tela
+      const hintOriginal = (hint && hint.textContent !== AVISO) ? hint.textContent : '';
+      if (btn) btn.disabled = true;
+      if (hint) { hint.textContent = AVISO; hint.style.opacity = '1'; }
+
+      return lerEstoque(4000)
+        .then(counts => { rebuildPrizes(counts); drawWheel(); })
+        .catch(() => {})                       // mantém os pesos já carregados
+        .finally(() => {
+          conferindo = false;
+          if (btn) btn.disabled = false;
+          if (hint) hint.textContent = hintOriginal || 'Toque no botão abaixo para girar';
+          doSpin();
+        });
+    };
+
+    window.addEventListener('resize', () => {
+      if (document.getElementById('roleta-screen').style.display === 'flex') initCanvas();
+    });
+
+    /* --- Exposto para testes automatizados --- */
+    window.__roleta = { BASE_PRIZES, rebuildPrizes, weightedPick, totalWeight,
+                        flushLigado, FLUSH_INICIO, FLUSH_FIM, FLUSH_WEIGHTS,
+                        clogRestante, normalizeAngle, randomFloat, randomInt,
+                        getPrizes: () => PRIZES, SLICE,
+                        setVd: (v) => { _vd = v; },
+                        resetSpin: () => { spinning = false; spinDone = false; conferindo = false; rotation = 0; },
+                        selectedIndexFor: (rot) => Math.floor(normalizeAngle(-rot) / SLICE) % PRIZES.length };
+
+  })();
+
+  /* ---- RESTAURA ESTADO ANTERIOR ---- */
+  (function() {
+    if (!localStorage.getItem('ftbrs3_completed')) return;
+    const savedVoucher = localStorage.getItem('ftbrs3_voucher') || '';
+    const savedPremio  = localStorage.getItem('ftbrs3_premio')  || '';
+    const savedGenero  = localStorage.getItem('ftbrs3_genero')  || '';
+    const savedTam     = localStorage.getItem('ftbrs3_tamanho') || '';
+    const ganhou = savedPremio && savedPremio !== 'Esgotado';
+    const ehClog = savedPremio === 'Kit Clog + Pins FT';
+
+    const rs = document.getElementById('retorno-screen');
+    rs.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    rs.innerHTML = `
+      <div style="min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; box-sizing:border-box;">
+        <div style="max-width:480px; width:100%;">
+
+          <div style="text-align:center; margin-bottom:14px; color:#E12529; display:flex; justify-content:center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3 class="f-anton" style="font-size:clamp(1.6rem,5vw,2.1rem); color:#E12529; text-transform:uppercase; text-align:center; margin-bottom:16px;">Você já participou!</h3>
+
+          ${ganhou ? `<div style="background:#E12529; border-radius:12px; padding:14px 16px; margin-bottom:10px; text-align:center;">
+            <p style="font-size:.6rem; letter-spacing:.28em; color:#4ade80; font-family:'Roboto',sans-serif; margin-bottom:5px; text-transform:uppercase;">Brinde Ganho na Roleta</p>
+            <p class="f-anton" style="font-size:1.4rem; color:#fff; text-transform:uppercase; line-height:1.2;">${savedPremio}</p>
+            ${ehClog && savedTam ? `<p style="font-size:.78rem; color:rgba(255,255,255,.85); font-family:'Roboto',sans-serif; margin-top:6px;">${savedGenero === 'F' ? 'Feminino' : 'Masculino'} · Tamanho ${savedTam}</p>` : ''}
+          </div>` : ''}
+
+          ${savedVoucher ? `<div style="background:#161616; border-radius:12px; padding:14px 16px; margin-bottom:10px; border:1px solid rgba(225,37,41,.2); text-align:center;">
+            <p style="font-size:.6rem; letter-spacing:.28em; color:#4ade80; font-family:'Roboto',sans-serif; margin-bottom:5px; text-transform:uppercase;">Voucher da Roleta BR Sport</p>
+            <p class="f-anton" style="font-size:1.5rem; color:#fff; letter-spacing:.1em;">${savedVoucher}</p>
+          </div>` : ''}
+
+          <div style="background:#161616; border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid rgba(255,255,255,.07); text-align:left;">
+            <p style="display:flex; align-items:center; gap:6px; font-size:.7rem; letter-spacing:.18em; color:#E12529; font-family:'Roboto',sans-serif; font-weight:700; text-transform:uppercase; margin-bottom:10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Local de resgate
+            </p>
+            <p style="font-size:.9rem; color:#fff; font-family:'Roboto',sans-serif; font-weight:500; margin-bottom:6px;">Espaço BR Sport — Autódromo FuelTech Velopark</p>
+            <p style="font-size:.82rem; color:rgba(255,255,255,.3); font-family:'Roboto',sans-serif;">Apresente este voucher + siga @brsport.oficial</p>
+          </div>
+
+          <a href="https://www.instagram.com/brsport.oficial" target="_blank" rel="noopener noreferrer" class="btn-red" style="padding:15px 24px; display:flex; justify-content:center; text-decoration:none; width:100%; box-sizing:border-box; margin-bottom:10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Seguir @brsport.oficial
+          </a>
+          <button onclick="openMapa()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:50px; color:rgba(255,255,255,.7); font-family:'Roboto',sans-serif; font-size:.88rem; font-weight:500; cursor:pointer; letter-spacing:.04em; box-sizing:border-box;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ver mapa do evento
+          </button>
+
+        </div>
+      </div>`;
+  })();
+
+  /* ---- SCROLL REVEAL ---- */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ---- NAVBAR opacity on scroll ---- */
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(8,8,8,.97)';
+    } else {
+      nav.style.background = 'rgba(8,8,8,.85)';
+    }
+  }, { passive: true });
+</script>
+
+</body>
+</html>
